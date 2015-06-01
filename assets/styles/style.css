@@ -1,0 +1,57 @@
+.toolbar {
+  color: white;
+}
+
+.nav-btn {
+  height: inherit;
+  padding: 1em;
+  color: whitesmoke;
+  display: block;
+}
+
+md-dialog {
+  min-width: 60%;
+  min-height: 60%;
+}
+
+.loginFormInput {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  padding: 2px 20px 26px;
+}
+
+.login-form-submit {
+  color: black;
+}
+
+nav {
+  min-height: 64px;
+}
+
+nav .brand-logo {
+  line-height: inherit;
+}
+
+.notification {
+  color: red;
+}
+/*
+nav a {
+  padding: 0 0 0 10px;
+  margin-top: -10px;
+}
+
+nav ul {
+  margin-top: 0px;
+  height: inherit;
+}
+
+nav ul li {
+  margin-top: 0px;
+  height: inherit;
+}*/

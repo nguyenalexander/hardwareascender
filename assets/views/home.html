@@ -1,0 +1,28 @@
+<div class="row">
+  <h2> listings </h2>
+  <hr>
+  <div class="col s12">
+    <table class="table">
+      <thead>
+        <tr>
+          <th> title </th>
+          <th> price </th>
+          <th> Desc </th>
+          <!-- <th><a class="waves-effect waves-light btn" ng-click="loadContacts()"><i class="mdi-navigation-refresh"></i></a></th>
+          <th><a class="waves-effect waves-light btn" ng-click="createContact()"><i class="mdi-content-add-circle-outline"></i></a></th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="listing in listings">
+          <td>{{listing.title}}</td>
+          <td>${{listing.price}}</td>
+          <td>{{listing.desc}}</td>
+<!--           <td><a class="waves-effect waves-light red btn" ng-click="deleteContact(contact.id)"><i class="mdi-action-highlight-remove"></i></a></td>
+          <td><a class="waves-effect waves-light btn" ng-href="/contact/{{contact.id}}"><i class="mdi-action-pageview"></i></a></td>
+          <td><a class="waves-effect waves-light btn" ng-click="openEditModal(contact.id)"><i class="mdi-content-create"></i></a></td> -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+

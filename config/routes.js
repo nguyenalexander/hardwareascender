@@ -32,9 +32,13 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': {
-    view: 'homepage'
-  }
+  '/': 'ViewController.index',
+
+  // Local Authentication //
+
+  'get /api/auth': 'AuthController.check',
+  'post /api/auth': 'AuthController.login',
+  'delete /api/auth': 'AuthController.logout',
 
   /***************************************************************************
   *                                                                          *

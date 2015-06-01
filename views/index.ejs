@@ -1,0 +1,25 @@
+<nav class="blue-grey darken-4">
+  <div class="nav-wrapper" ng-controller="NavCtrl">
+    <a href="/" class="brand-logo waves-effect waves-light btn-flat nav-btn">hardware ascender</a>
+    <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+    <ul id="nav" class="right hide-on-med-and-down">
+      <li><a class="waves-effect waves-light btn-flat nav-btn" href="/#/api/listing/new">Sell</a></li>
+      <li><a class="waves-effect waves-light btn-flat nav-btn" href="#" ng-click="showLogin($event)" ng-hide="currentUser">Login</a></li>
+      <li><a class="waves-effect waves-light btn-flat nav-btn" href="#" ng-click="logout()" ng-show="currentUser">Logout</a></li>
+      <li><a class="waves-effect waves-light btn-flat nav-btn" href="" ng-if="currentUser">Hello, {{currentUser.username}} </a></li>
+      <li><a class="waves-effect waves-light btn-flat nav-btn" href="" ng-if="currentUser">inbox <span class="notification"> 5</span> </a></li>
+      <li><a class="waves-effect waves-light btn-flat nav-btn" href="#" ng-click="showSignup($event)" ng-hide="currentUser">Join</a></li>
+    </ul>
+    <ul id="nav-mobile" class="side-nav">
+      <li><a class="waves-effect waves-light btn-flat nav-btn" href="/#/api/listing/new">Sell</a></li>
+      <li><a class="waves-effect waves-light btn-flat nav-btn" href="#" ng-click="showLogin($event)" ng-hide="currentUser">Login</a></li>
+      <li><a class="waves-effect waves-light btn-flat nav-btn" href="#" ng-click="logout()" ng-show="currentUser">Logout</a></li>
+      <li><a class="waves-effect waves-light btn-flat nav-btn" href="" ng-if="currentUser">Hello, {{currentUser.username}} </a></li>
+      <li><a class="waves-effect waves-light btn-flat nav-btn" href="" ng-if="currentUser">inbox </a><span class="notification"><em>(5)&nbsp;</em></span></li>
+      <li><a class="waves-effect waves-light btn-flat nav-btn" href="#" ng-click="showSignup($event)" ng-hide="currentUser">Join</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="container">
+  <ng-view></ng-view>
+</div>
