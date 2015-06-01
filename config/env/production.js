@@ -12,27 +12,14 @@
 
 module.exports = {
 
-  /***************************************************************************
-   * Set the default database connection for models in the production        *
-   * environment (see config/connections.js and config/models.js )           *
-   ***************************************************************************/
+    connections:{
+        myMongoDbServerProd: {
+            adapter: 'sails-mongo',
+            url: 'mongodb://heroku_app37390017:vhi77pjta4jbhubd38rn4k2995@ds043012.mongolab.com:43012/heroku_app37390017'
+        }
+    },
 
-  // models: {
-  //   connection: 'someMysqlServer'
-  // },
-
-  /***************************************************************************
-   * Set the port in the production environment to 80                        *
-   ***************************************************************************/
-
-  // port: 80,
-
-  /***************************************************************************
-   * Set the log level in production environment to "silent"                 *
-   ***************************************************************************/
-
-  // log: {
-  //   level: "silent"
-  // }
-
+    models:{
+        connection: 'prodMongodbServer'
+    }
 };
