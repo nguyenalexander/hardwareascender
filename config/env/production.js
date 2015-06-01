@@ -13,7 +13,7 @@
 module.exports = {
 
     connections:{
-        myMongoDbServerProd: {
+        prodMongodbServer: {
             adapter: 'sails-mongo',
             url: 'mongodb://heroku_app37390017:vhi77pjta4jbhubd38rn4k2995@ds043012.mongolab.com:43012/heroku_app37390017'
         }
