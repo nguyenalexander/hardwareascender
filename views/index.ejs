@@ -1,25 +1,75 @@
 <nav class="blue-grey darken-4">
   <div class="nav-wrapper" ng-controller="NavCtrl">
     <a href="/" class="brand-logo waves-effect waves-light btn-flat nav-btn">hardware ascender</a>
-    <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
-    <ul id="nav" class="right hide-on-med-and-down">
-      <li><a class="waves-effect waves-light btn-flat nav-btn" href="/#/api/listing/new">Sell</a></li>
+    <a ng-if="$root.isMobile"href="#" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+    <ul ng-if="!$root.isMobile" id="nav" class="right hide-on-med-and-down">
+      <li><a class="waves-effect waves-light btn-flat nav-btn" href="/#/api/listing/new" ng-if="currentUser">Sell</a></li>
       <li><a class="waves-effect waves-light btn-flat nav-btn" href="#" ng-click="showLogin($event)" ng-hide="currentUser">Login</a></li>
       <li><a class="waves-effect waves-light btn-flat nav-btn" href="#" ng-click="logout()" ng-show="currentUser">Logout</a></li>
       <li><a class="waves-effect waves-light btn-flat nav-btn" href="" ng-if="currentUser">Hello, {{currentUser.username}} </a></li>
-      <li><a class="waves-effect waves-light btn-flat nav-btn" href="" ng-if="currentUser">inbox <span class="notification"> 5</span> </a></li>
+      <li><a class="inbox-btn show-on-large waves-effect waves-light" href="#" ng-click="toggleInbox()" ng-show="currentUser">inbox<span ng-show="$root.receivedCount" class="badge notification-badge">{{$root.receivedCount}}</span></a></li>
       <li><a class="waves-effect waves-light btn-flat nav-btn" href="#" ng-click="showSignup($event)" ng-hide="currentUser">Join</a></li>
     </ul>
-    <ul id="nav-mobile" class="side-nav">
-      <li><a class="waves-effect waves-light btn-flat nav-btn" href="/#/api/listing/new">Sell</a></li>
+    <ul ng-if="$root.isMobile" id="nav-mobile" class="side-nav">
+      <li><a class="waves-effect waves-light btn-flat nav-btn" href="/#/api/listing/new" ng-if="currentUser">Sell</a></li>
       <li><a class="waves-effect waves-light btn-flat nav-btn" href="#" ng-click="showLogin($event)" ng-hide="currentUser">Login</a></li>
       <li><a class="waves-effect waves-light btn-flat nav-btn" href="#" ng-click="logout()" ng-show="currentUser">Logout</a></li>
       <li><a class="waves-effect waves-light btn-flat nav-btn" href="" ng-if="currentUser">Hello, {{currentUser.username}} </a></li>
-      <li><a class="waves-effect waves-light btn-flat nav-btn" href="" ng-if="currentUser">inbox </a><span class="notification"><em>(5)&nbsp;</em></span></li>
+      <li><a class="inbox-btn show-on-large waves-effect waves-light" href="#" data-activates="nav-inbox" ng-show="currentUser">inbox<span ng-show="$root.receivedCount" class="badge notification-badge">{{$root.receivedCount}}</span></a></li>
       <li><a class="waves-effect waves-light btn-flat nav-btn" href="#" ng-click="showSignup($event)" ng-hide="currentUser">Join</a></li>
     </ul>
+<!--     <ul id="nav-message" class="side-nav">
+      <div class="row">
+        <div class="col s12">
+          <a class="inbox-btn show-on-large waves-effect waves-light" href="#" data-activates="nav-message">go back to inbox</a>
+          <div class="divider"></div>
+        </div>
+      </div>
+    </ul> -->
   </div>
 </nav>
+<section layout="row" id="sideNavSection" flex ng-controller="InboxNavCtrl">
+  <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="nav-inbox" id="nav-inbox">
+    <div class="row">
+      <div class="col s12">
+        <h5 class="message"> inbox </h5>
+        <div class="divider"></div>
+        <ul class="tabs">
+          <li class="tab col s3"><a class="active" href="#received">Received <span ng-show="$root.receivedCount" class="badge sidenav-badge">{{$root.receivedCount}}</span></a></li>
+          <li class="tab col s3"><a href="#sent">Sent ({{$root.messages.length}})</a></li>
+        </ul>
+      </div>
+      <div id="received" class="col s12">
+        <ul>
+          <li class="message" ng-repeat="message in $root.received"><a href="#" data-activates="nav-message" ui-sref="message" ng-click="navMessage(message.id)">{{message.messageTitle}}</a></li>
+        </ul>
+      </div>
+      <div id="sent" class="col s12">
+        <ul>
+          <li class="message" ng-repeat="message in $root.messages"><a href="#" data-activates="nav-message">{{message.messageTitle}}</a></li>
+        </ul>
+      </div>
+    </div>
+  </md-sidenav>
+
+  <md-sidenav flex class="md-sidenav-left md-whiteframe-z2" md-component-id="nav-messages" id="nav-messages">
+    <div class="row">
+      <div class="col s12">
+        <h5 class="message"> {{message.messageTitle}} | <p><a class="waves-effect waves-light btn right" ng-click="toggleMessage()">back to inbox</a></p></h5>
+        <div class="divider"></div>
+        <div ng-if="message.type == 'question'" ui-view="question"></div>
+        <div ng-if="message.type == 'offer'" ui-view="offer"></div>
+        <div ng-if="message.type == 'buy'" ui-view="buy"></div>
+        <p ng-if="message.type == 'question'">{{message.messageBody}}</p>
+        <p ng-if="message.type == 'question'">- {{message.sender.username}}</p>
+        <p ng-if="message.type == 'offer'">{{message.sender.username}} made you an offer of {{message.offer}}</p>
+        <a class="waves-effect waves-light btn">Reply</a>
+        <a ng-if="message.type == 'offer'" class="waves-effect waves-light btn">reply to offer!</a>
+
+      </div>
+    </div>
+  </md-sidenav>
+</section>
 <div class="container">
   <ng-view></ng-view>
 </div>

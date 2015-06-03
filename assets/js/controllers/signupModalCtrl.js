@@ -6,8 +6,8 @@ HardwareAscender.controller('signupModalCtrl', ['$scope', '$mdDialog', 'SignupSe
     SignupService.signup($scope.email, $scope.password, $scope.username, function(err, data){
       if (err){
         console.log(err);
-      }else if (data && data.result){
-        console.log(data, data.result)
+      }else if (data && data.username && data.password && data.email){
+        console.log(data)
         $mdDialog.hide();
       }else{
         console.log("user couldn't be created")

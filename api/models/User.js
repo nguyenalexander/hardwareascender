@@ -29,9 +29,12 @@ module.exports = {
       collection: 'Message',
       via: 'sender'
     },
-    recieved: {
+    received: {
       collection: 'Message',
       via: 'recipient'
+    },
+    socketId: {
+      type: 'string'
     }
   },
   beforeCreate: function(values, callback) {

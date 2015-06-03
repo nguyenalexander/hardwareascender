@@ -1,4 +1,4 @@
-HardwareAscender.controller('ListingCtrl', ['$scope', '$resource', 'Listings', 'UserService', '$location', function($scope, $resource, Listings, UserService, $location){
+HardwareAscender.controller('ListingCtrl', ['$scope', '$resource', 'Listings', 'UserService', '$location', '$routeParams', '$mdDialog', function($scope, $resource, Listings, UserService, $location, $routeParams, $mdDialog){
   $scope.UserService = UserService;
 
   $scope.$watchCollection('UserService',function(){
@@ -22,7 +22,6 @@ HardwareAscender.controller('ListingCtrl', ['$scope', '$resource', 'Listings', '
     console.log(listing)
     listing.$save(function(data){
       console.log('listing added!', data)
-      $scope.listing = data
       $scope.title = "";
       $scope.brand = "";
       $scope.category = "";
@@ -42,4 +41,32 @@ HardwareAscender.controller('ListingCtrl', ['$scope', '$resource', 'Listings', '
     //   $scope.commentBody = "";
     // })
   }
+
+  Listings.get({id: $routeParams.id}, function(data){
+    $scope.listing = data;
+  })
+
+  $scope.showQuestion = function(event) {
+    $mdDialog.show({
+      controller: 'messageCtrl',
+      templateUrl: 'templates/questionModalTmpl.html',
+      targetEvent: event,
+    })
+  };
+
+  $scope.showOffer = function(event) {
+    $mdDialog.show({
+      controller: 'messageCtrl',
+      templateUrl: 'templates/offerModalTmpl.html',
+      targetEvent: event,
+    })
+  };
+
+  $scope.showBuy = function(event) {
+    $mdDialog.show({
+      controller: 'messageCtrl',
+      templateUrl: 'templates/buyModalTmpl.html',
+      targetEvent: event,
+    })
+  };
 }]);

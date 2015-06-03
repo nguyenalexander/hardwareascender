@@ -1,3 +1,7 @@
+.container {
+  width: 85%;
+}
+
 .toolbar {
   color: white;
 }
@@ -7,6 +11,11 @@
   padding: 1em;
   color: whitesmoke;
   display: block;
+}
+
+nav.brand-logo {
+  padding-left: 2% !important;
+  padding-right: 2% !important;
 }
 
 md-dialog {
@@ -39,6 +48,80 @@ nav .brand-logo {
 
 .notification {
   color: red;
+}
+
+.card .card-image .card-title {
+  position: absolute;
+  bottom: 2%;
+  left: 0;
+  padding: 20px;
+  min-width: 100%;
+  background: -webkit-linear-gradient(bottom, rgba(0,0,0,.25) , rgba(0,0,0,0));
+  background: -o-linear-gradient(bottom, rgba(0,0,0,.25) , rgba(0,0,0,0));
+  background: -moz-linear-gradient(bottom, rgba(0,0,0,.25) , rgba(0,0,0,0));
+  background: linear-gradient(bottom, rgba(0,0,0,.25) , rgba(0,0,0,0));
+}
+
+.container .row {
+  margin-left: -0.75rem;
+  margin-right: -0.75rem;
+  margin-top: 5%;
+}
+
+.container .home-row {
+  margin-left: none;
+  margin-right: none;
+}
+
+em.title-price.ng-binding {
+  font-size: large;
+}
+
+.badge.notification-badge {
+  right: 10px;
+  color: #fff;
+  background-color: #26a69a;
+  border-radius: 2px;
+  margin-left: 20%;
+  position: relative;
+}
+
+.badge.sidenav-badge {
+  left: 10px;
+  color: #fff;
+  background-color: #26a69a;
+  border-radius: 2px;
+  margin-left: 0;
+  position: relative;
+}
+
+.message {
+  color: black;
+}
+
+#nav-inbox {
+  width: 35% !important;
+  max-width: 35% !important;
+  min-width: 35% !important;
+}
+
+#nav-messages {
+  width: 65% !important;
+  max-width: 65% !important;
+  min-width: 65% !important;
+}
+
+#sideNavSection {
+  max-height: 0;
+}
+
+.price-input {
+  width: 95% !important;
+  margin-left: 1% !important;
+  display: inline;
+}
+.price-addon {
+  display: inline;
 }
 /*
 nav a {

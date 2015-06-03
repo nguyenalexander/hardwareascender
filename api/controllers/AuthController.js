@@ -35,7 +35,14 @@ module.exports = {
     res.send({result:true})
   },
   check: function(req, res){
-    res.send({user: req.session.user || false})
+    var  user = req.session.user || false
+    if (user){
+      User.update({id: user.id}, {socketId: req.socket.id}).then(function(data){
+        res.send({user: user})
+      })
+    }else{
+      res.ssend({user: false})
+    }
   }
 }
 

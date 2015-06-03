@@ -1,4 +1,6 @@
-HardwareAscender.controller('HomeCtrl', ['$scope', '$resource', function($scope, $resource){
+HardwareAscender.controller('HomeCtrl', ['$scope', '$resource', 'UserService', function($scope, $resource, UserService){
+
+  $scope.userService = UserService;
 
   console.log("home controller loaded")
   $scope.listings = [];
@@ -13,39 +15,39 @@ HardwareAscender.controller('HomeCtrl', ['$scope', '$resource', function($scope,
   }
   $scope.loadListings();
 
-  // io.socket.on('contact', function(msg){
-  //   console.log('Message:',msg);
-  //   if (msg && msg.verb){
-  //     switch(msg.verb){
-  //       case 'created':
-  //         $scope.$evalAsync(function(){
-  //           $scope.Listing.push(msg.data)
-  //         })
-  //       break;
-  //       case 'destroyed':
-  //         $scope.$evalAsync(function(){
-  //           for(var i=0; i<$scope.Listing.length; i++){
-  //             if($scope.Listing[i].id == msg.id){
-  //               $scope.Listing.splice(i, 1)
-  //             }
-  //           }
-  //         })
-  //       break;
-  //       case 'updated':
-  //         $scope.$evalAsync(function(){
-  //           for(var i=0; i<$scope.Listing.length; i++){
-  //             if($scope.Listing[i].id == msg.id){
-  //               for(var key in msg.data){
-  //                 $scope.Listing[i][key] == msg.data[key]
-  //               }
-  //               break;
-  //             }
-  //           }
-  //         })
-  //       break;
-  //     }
-  //   }
-  // })
+  io.socket.on('listing', function(msg){
+    console.log('Message:',msg);
+    if (msg && msg.verb){
+      switch(msg.verb){
+        case 'created':
+          $scope.$evalAsync(function(){
+            $scope.listings.push(msg.data)
+          })
+        break;
+        case 'destroyed':
+          $scope.$evalAsync(function(){
+            for(var i=0; i<$scope.listings.length; i++){
+              if($scope.listings[i].id == msg.id){
+                $scope.listings.splice(i, 1)
+              }
+            }
+          })
+        break;
+        case 'updated':
+          $scope.$evalAsync(function(){
+            for(var i=0; i<$scope.listings.length; i++){
+              if($scope.listings[i].id == msg.id){
+                for(var key in msg.data){
+                  $scope.listings[i][key] == msg.data[key]
+                }
+                break;
+              }
+            }
+          })
+        break;
+      }
+    }
+  })
 
   // $scope.deleteContact = function(contactId){
   //   Listing.delete({id:contactId}, function(data){

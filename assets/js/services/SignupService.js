@@ -4,7 +4,8 @@ HardwareAscender.factory('SignupService', ['$http', function($http){
       var self = this;
       $http.post('/api/user', {email: email, password: password, username: username})
         .success(function(data){
-          if(data && data.result && data.user){
+          console.log(data)
+          if(data && data.email && data.password && data.username){
             self.currentUser = data.user;
           }else{
             self.currentUser = false;

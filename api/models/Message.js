@@ -8,6 +8,9 @@
 module.exports = {
 
   attributes: {
+    messageTitle:{
+      type: 'string'
+    },
     messageBody: {
       type: 'string',
       required: true
@@ -20,6 +23,9 @@ module.exports = {
     },
     status: {
       type: 'boolean'
+    },
+    type: {
+      type: 'string'
     }
   }
 };
