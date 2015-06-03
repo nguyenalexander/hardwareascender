@@ -26,6 +26,9 @@ module.exports = {
     },
     type: {
       type: 'string'
+    },
+    listing: {
+      model: 'Listing'
     }
   }
 };

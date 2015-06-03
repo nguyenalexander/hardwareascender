@@ -1,0 +1,3 @@
+<p>{{$root.msg.sender.username}} made you an offer of {{'$'+$root.msg.offer}}, the listing price of {{$root.msg.listing.title}}</p>
+<a class="waves-effect waves-light btn" ng-click="sendReply('offer decline', $root.msg.offer)">decline offer</a>
+<a class="waves-effect waves-light btn" ng-click="sendReply('offer accept', $root.msg.offer)">accept offer</a>

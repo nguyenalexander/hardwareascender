@@ -9,7 +9,7 @@
     <div><h4 class="text-flow"> {{listing.title}} <em class="title-price">(${{listing.price}})</em></h4></div>
     <div class="divider"></div>
     <p> {{listing.desc}} </p>
-    <a ng-click="showBuy()" class="waves-effect waves-teal btn-flat">buy</a>
+    <a ng-click="sendOffer(listing.price)" class="waves-effect waves-teal btn-flat">buy</a>
     <a ng-click="showOffer()" class="waves-effect waves-teal btn-flat">make an offer</a>
     <a ng-click="showQuestion()" class="waves-effect waves-teal btn-flat">ask a question</a>
   </div>

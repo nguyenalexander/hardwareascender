@@ -1,0 +1,6 @@
+<p>{{$root.msg.messageBody}}</p>
+<p>- {{$root.msg.sender.username}}</p>
+<p>{{$root.msg.sender.username}} made you a counteroffer of {{$root.msg.offer}}</p>
+<a class="waves-effect waves-light btn" ng-click="sendReply('offer decline', $root.msg.offer)">decline offer</a>
+<a class="waves-effect waves-light btn" ng-click="sendReply('offer accept', $root.msg.offer)">accept offer</a>
+<a class="waves-effect waves-light btn" ui-sref="replyO">counteroffer</a>

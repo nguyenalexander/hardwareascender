@@ -41,7 +41,7 @@ module.exports = {
         res.send({user: user})
       })
     }else{
-      res.ssend({user: false})
+      res.send({user: false})
     }
   }
 }

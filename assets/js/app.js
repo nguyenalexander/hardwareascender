@@ -25,15 +25,15 @@ HardwareAscender.config(['$routeProvider', '$locationProvider', '$stateProvider'
     templateUrl: '/views/home.html',
     controller: 'HomeCtrl'
   })
-  .when('/api/user/:id', {
+  .when('/user/:id', {
     templateUrl: '/views/user/show.html',
     controller: 'UserCtrl'
   })
-  .when('/api/listing/new', {
+  .when('/listing/new', {
     templateUrl: '/views/listing/new.html',
     controller: 'ListingCtrl'
   })
-  .when('/api/listing/:id', {
+  .when('/listing/:id', {
     templateUrl: '/views/listing/show.html',
     controller: 'ListingCtrl'
   })
@@ -41,12 +41,49 @@ HardwareAscender.config(['$routeProvider', '$locationProvider', '$stateProvider'
     templateUrl:'/views/404.html'
   });
   $stateProvider
-  .state('message', {
+  .state('question', {
     url: "",
-    views: {
-      "question": {template: "/templates/message/questionShow.html"},
-      "offer": {template: "/template/message/offerShow.html"},
-      "buy": {template: "/template/message/buyShow.html"}
-    }
+    controller: 'replyCtrl',
+    templateUrl: "/templates/message/questionShow.html"
+  })
+  .state('offer', {
+    url: "",
+    controller: 'replyCtrl',
+    templateUrl: "/templates/message/offerShow.html"
+  })
+  .state('buy', {
+    url: "",
+    controller: 'replyCtrl',
+    templateUrl: "/templates/message/buyShow.html"
+  })
+  .state('offer reply', {
+    url: "",
+    controller: 'replyCtrl',
+    templateUrl: "/templates/message/offerReplyShow.html"
+  })
+  .state('offer decline', {
+    url: "",
+    controller: 'replyCtrl',
+    templateUrl: "/templates/message/offerDecline.html"
+  })
+  .state('offer accept', {
+    url: "",
+    controller: 'replyCtrl',
+    templateUrl: "/templates/message/offerAccept.html"
+  })
+  .state('replyQ', {
+    url: "",
+    controller: 'replyCtrl',
+    templateUrl: "/templates/message/replyQ.html"
+  })
+  .state('replyO', {
+    url: "",
+    controller: 'replyCtrl',
+    templateUrl: "/templates/message/replyO.html"
+  })
+  .state('replyB', {
+    url: "",
+    controller: 'replyCtrl',
+    templateUrl: "/templates/message/replyB.html"
   })
 }])

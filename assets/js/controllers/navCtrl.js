@@ -29,19 +29,28 @@ HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'User
       .join(' ');
   };
 
-  $scope.showSentToast = function() {
+  $scope.showSentToast = function(type) {
     $mdToast.show(
       $mdToast.simple()
-        .content('Your message has been delivered!')
+        .content('Your '+type+' has been sent!')
         .position($scope.getToastPosition())
         .hideDelay(3000)
     );
   };
 
-  $scope.showReceivedToast = function() {
+  $scope.showReceivedToast = function(type) {
     $mdToast.show(
       $mdToast.simple()
-        .content('You just got a message!')
+        .content('You just got a new '+type+'!')
+        .position($scope.getToastPosition())
+        .hideDelay(3000)
+    );
+  };
+
+  $scope.showAcceptedToast = function(title) {
+    $mdToast.show(
+      $mdToast.simple()
+        .content(title+' has just been sold! Woohoo!')
         .position($scope.getToastPosition())
         .hideDelay(3000)
     );
@@ -117,23 +126,65 @@ HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'User
         $scope.$evalAsync(function(){
           $rootScope.messages.push(data)
           $rootScope.messagesCount +=1
-          $scope.showSentToast();
+          if (data.type == 'question') {
+            $scope.showSentToast('question');
+          }else if (data.type == 'offer') {
+            $scope.showSentToast('offer');
+          }else if (data.type == 'offer reply') {
+            $scope.showSentToast('reply');
+          }else if (data.type == 'offer decline') {
+            $scope.showSentToast('offer');
+          }else if (data.type == 'offer accept') {
+            $scope.showSentToast('offer');
+          }else {
+            $scope.showSentToast('offer');
+          }
         })
       }else if (data.recipient == $scope.currentUser.id){
         console.log('you are the receiver', $scope.currentUser.username)
         $scope.$evalAsync(function(){
           $rootScope.received.push(data)
           $rootScope.receivedCount += 1
-          $scope.showReceivedToast();
+          if (data.type == 'question') {
+            $scope.showReceivedToast('question');
+          }else if (data.type == 'offer') {
+            $scope.showReceivedToast('offer');
+          }else if (data.type == 'offer reply') {
+            $scope.showReceivedToast('reply on your offer');
+          }else if (data.type == 'offer decline') {
+            $scope.showReceivedToast('offer');
+          }else if (data.type == 'offer accept') {
+            $scope.showReceivedToast('offer');
+          }else {
+            $scope.showReceivedToast('offer');
+          }
         })
       }
     }
   })
 
+  io.socket.on('accept', function(data){
+    if (data && data.status && data.user){
+      if (data.user == $scope.currentUser.id){
+        console.log('you are the sender', $scope.currentUser.username)
+        $scope.$evalAsync(function(){
+          $scope.showAcceptedToast(data.title);
+        })
+      }
+    }
+    console.log('accepted!!!!!',data)
+  });
+
+
 }])
-  .controller('InboxNavCtrl',['$scope','$mdDialog', 'UserService', '$mdToast', '$animate','$mdSidenav','$mdUtil','$log', 'Messages', function($scope,$mdDialog,UserService, $mdToast, $animate, $mdSidenav, $mdUtil, $log, Messages){
+  .controller('InboxNavCtrl',['$scope', '$rootScope', '$mdDialog', 'UserService', '$mdToast', '$animate','$mdSidenav','$mdUtil','$log', 'Messages', function($scope, $rootScope, $mdDialog,UserService, $mdToast, $animate, $mdSidenav, $mdUtil, $log, Messages){
     console.log('inbox nav ctrl loaded')
-    $scope.toggleMessage = buildToggler('nav-messages');
+    $rootScope.toggleMessage = buildToggler('nav-messages');
+
+    // $scope.$on('$viewContentLoaded', function(){
+    //   console.log('fully loaded')
+    //   $rootScope.loaded = true;
+    // })
 
     function buildToggler(navID) {
       var debounceFn = $mdUtil.debounce(function(){
@@ -151,7 +202,7 @@ HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'User
       console.log(messageId)
       Messages.get({id: messageId}, function(data){
         console.log(data)
-        $scope.message = data
+        $rootScope.msg = data
       })
     }
   }])

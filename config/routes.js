@@ -39,7 +39,13 @@ module.exports.routes = {
   'get /api/auth': 'AuthController.check',
   'post /api/auth': 'AuthController.login',
   'delete /api/auth': 'AuthController.logout',
-  'post /api/user/:id/messages': 'MessageController.send'
+  'post /api/user/:id/messages': 'MessageController.send',
+  "get *": {
+    controller:"ViewController",
+    action:"index",
+    skipAssets: true,
+    skipRegex: /^\/api\/.*$/
+  }
 
   /***************************************************************************
   *                                                                          *

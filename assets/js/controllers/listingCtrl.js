@@ -1,4 +1,5 @@
 HardwareAscender.controller('ListingCtrl', ['$scope', '$resource', 'Listings', 'UserService', '$location', '$routeParams', '$mdDialog', function($scope, $resource, Listings, UserService, $location, $routeParams, $mdDialog){
+  console.log('listing controller loaded')
   $scope.UserService = UserService;
 
   $scope.$watchCollection('UserService',function(){
@@ -19,6 +20,7 @@ HardwareAscender.controller('ListingCtrl', ['$scope', '$resource', 'Listings', '
     listing.title = $scope.title;
     listing.category = $scope.category
     listing.price = $scope.price;
+    listing.status = false;
     console.log(listing)
     listing.$save(function(data){
       console.log('listing added!', data)
@@ -33,13 +35,6 @@ HardwareAscender.controller('ListingCtrl', ['$scope', '$resource', 'Listings', '
     $scope.goTo = function(path){
       $location.path(path);
     };
-    // comment.body = $scope.commentBody;
-    // comment.$save({contactId: $scope.contact.id}, function(data){
-    //   console.log(data)
-    //   console.log('comment added!')
-    //   $scope.contact = data;
-    //   $scope.commentBody = "";
-    // })
   }
 
   Listings.get({id: $routeParams.id}, function(data){
@@ -62,11 +57,16 @@ HardwareAscender.controller('ListingCtrl', ['$scope', '$resource', 'Listings', '
     })
   };
 
-  $scope.showBuy = function(event) {
-    $mdDialog.show({
-      controller: 'messageCtrl',
-      templateUrl: 'templates/buyModalTmpl.html',
-      targetEvent: event,
+  $scope.sendOffer = function(offer){
+    io.socket.post('/api/user/'+$scope.listing.user.id+'/messages', {title:$scope.currentUser.username+' is offering to buy '+$scope.listing.title+'!', body:$scope.currentUser.username+' wants to buy '+$scope.listing.title+' for your listing price!', type:'buy', offer:offer, listing: $scope.listing.id}, function(data){
+      $scope.$evalAsync(function(){
+      if (data){
+          console.log('offer sent',data)
+        }else{
+          console.log('error!', data)
+        }
+      })
     })
   };
+
 }]);

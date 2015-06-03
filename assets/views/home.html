@@ -1,13 +1,13 @@
 <div class="row home-row">
   <div class="col s3" ng-repeat="listing in listings">
-    <div class="card grey lighten-5">
+    <div ng-if="listing.status == false" class="card grey lighten-5">
       <div class="card-image">
-        <a href="/api/listing/{{listing.id}}"><img src="https://placekitten.com/300/300?image=13"></a>
+        <a href="/listing/{{listing.id}}"><img src="https://placekitten.com/300/300?image=13"></a>
         <span class="card-title flow-text">
           <h6>{{listing.brand}}</h6>
           <div class="divider"></div>
           <h6>{{listing.title}} <br\>
-          <em><a href="/api/user/{{listing.user.id}}">{{listing.user.username}}</a></em></h6>
+          <em><a href="/user/{{listing.user.id}}">{{listing.user.username}}</a></em></h6>
         </span>
       </div>
       <div class="card-content black-text">

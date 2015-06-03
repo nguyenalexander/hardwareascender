@@ -1,0 +1,14 @@
+  <form name="loginForm" class="col s12">
+  <md-dialog-content class="sticky-container" layout-padding>
+    <md-subheader class="md-sticky-no-effect">reply to {{$root.msg.messageTitle}}</md-subheader>
+    <div class="row">
+      <div class="input-field col s12">
+        <textarea class="materialize-textarea" ng-model="messageBody" id="messageBody" type="text" class="validate"></textarea>
+        <label for="messageBody">message</label>
+      </div>
+    </div>
+  </md-dialog-content>
+  <div class="md-actions" layout="row">
+    <button class="btn waves-effect waves-light btn-flat login-form-submit" type="submit" name="action" ng-click="sendReply('question')">send</button>
+  </div>
+  </form>
