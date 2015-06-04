@@ -33,7 +33,7 @@
       </div>
       <div id="received" class="col s12">
         <ul>
-          <li class="message" ng-repeat="message in $root.received"><span ng-if="message.status" class="badge new"></span><a href="#" data-activates="nav-message" ui-sref="{{message.type}}" ng-click="navMessage(message.id)">{{message.messageTitle}}</a><a href="/user/{{message.sender}}">{{message.sender.user}}</a></li>
+          <li class="message" ng-repeat="message in $root.received"><span ng-if="message.status" class="badge new"></span><a href="#" data-activates="nav-message" ng-click="navMessage(message.id)">{{message.messageTitle}}</a><a href="/user/{{message.sender}}">{{message.sender.user}}</a></li>
         </ul>
       </div>
       <div id="sent" class="col s12">
