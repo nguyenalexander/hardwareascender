@@ -2,7 +2,7 @@ HardwareAscender.factory('UserService', ['$http', function($http){
   return {
     login: function(email, password, callback){
       var self = this;
-      $http.post('/api/auth', {email: email, password: password})
+      $http.post('/auth', {email: email, password: password})
         .success(function(data){
           if(data && data.result && data.user){
             self.currentUser = data.user;
@@ -20,7 +20,7 @@ HardwareAscender.factory('UserService', ['$http', function($http){
     },
     check: function(callback){
       var self = this;
-      io.socket.get('/api/auth', function(data){
+      io.socket.get('/auth', function(data){
           if(data && data.user){
             self.currentUser = data.user;
           }else{
@@ -31,7 +31,7 @@ HardwareAscender.factory('UserService', ['$http', function($http){
     },
     logout: function(callback){
       this.currentUser = false;
-      $http.delete('/api/auth')
+      $http.delete('/auth')
       .success(function(data){
         callback(null, data)
       })
@@ -42,5 +42,5 @@ HardwareAscender.factory('UserService', ['$http', function($http){
   };
 }])
 .factory('Users', ['$resource', function($resource){
-  return $resource('/api/user/:id')
+  return $resource('/user/:id')
 }])

@@ -3,10 +3,10 @@ HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'User
 
 
     var buildToggler = function(navID, state) {
-      if (state){
-        console.log('state changed to', state)
-        $state.transitionTo(state)
-      }
+      // if (state){
+      //   console.log('state changed to', state)
+      //   $state.transitionTo(state)
+      // }
       var debounceFn = $mdUtil.debounce(function(){
         $mdSidenav(navID)
           .toggle()

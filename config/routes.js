@@ -36,10 +36,10 @@ module.exports.routes = {
 
   // Local Authentication //
 
-  'get /api/auth': 'AuthController.check',
-  'post /api/auth': 'AuthController.login',
-  'delete /api/auth': 'AuthController.logout',
-  'post /api/user/:id/messages': 'MessageController.send',
+  'get /auth': 'AuthController.check',
+  'post /auth': 'AuthController.login',
+  'delete /auth': 'AuthController.logout',
+  'post /user/:id/messages': 'MessageController.send',
   "get *": {
     controller:"ViewController",
     action:"index",

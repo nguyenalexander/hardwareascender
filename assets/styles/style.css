@@ -110,6 +110,7 @@ em.title-price.ng-binding {
   width: 35% !important;
   max-width: 35% !important;
   min-width: 35% !important;
+  position: fixed;
 }
 
 #nav-messages {

@@ -33,10 +33,10 @@ HardwareAscender.config(['$routeProvider', '$locationProvider', '$stateProvider'
     templateUrl: '/views/home.html',
     controller: 'HomeCtrl'
   })
-  .when('/message', {
-    templateUrl:'/views/home.html',
-    controller: 'InboxNavCtrl'
-  })
+  // .when('/message', {
+  //   templateUrl:'/views/home.html',
+  //   controller: 'InboxNavCtrl'
+  // })
   .when('/user/:id', {
     templateUrl: '/views/user/show.html',
     controller: 'UserCtrl'
@@ -53,11 +53,11 @@ HardwareAscender.config(['$routeProvider', '$locationProvider', '$stateProvider'
     templateUrl:'/views/404.html'
   });
   $stateProvider
-  .state('message', {
-    url: "/message",
-    templateUrl: "/views/home.html",
-    controller: 'InboxNavCtrl'
-  })
+  // .state('message', {
+  //   url: "/message",
+  //   templateUrl: "/views/home.html",
+  //   controller: 'InboxNavCtrl'
+  // })
   .state('question', {
     url: "/message/:id",
     controller: 'replyCtrl',
