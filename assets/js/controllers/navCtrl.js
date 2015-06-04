@@ -1,10 +1,12 @@
-HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'UserService', '$mdToast', '$animate','$mdSidenav','$mdUtil','$log', function($scope,$rootScope,$mdDialog,UserService, $mdToast, $animate, $mdSidenav, $mdUtil, $log){
+HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'UserService', '$mdToast', '$animate','$mdSidenav','$mdUtil','$log', '$state', function($scope,$rootScope,$mdDialog,UserService, $mdToast, $animate, $mdSidenav, $mdUtil, $log, $state){
   console.log('nav controller loaded.');
 
-    $scope.toggleInbox = buildToggler('nav-inbox');
-    $scope.toggleRight = buildToggler('right');
 
-    function buildToggler(navID) {
+    var buildToggler = function(navID, state) {
+      if (state){
+        console.log('state changed to', state)
+        $state.transitionTo(state)
+      }
       var debounceFn = $mdUtil.debounce(function(){
         $mdSidenav(navID)
           .toggle()
@@ -14,6 +16,9 @@ HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'User
       },300);
       return debounceFn;
     }
+
+    $scope.toggleInbox = buildToggler('nav-inbox', 'message');
+    $scope.toggleMobileNav = buildToggler('mobile-nav');
 
   $scope.UserService = UserService;
 
@@ -56,43 +61,21 @@ HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'User
     );
   };
 
-  $scope.showLogin = function(event) {
-    $mdDialog.show({
-      controller: 'loginModalCtrl',
-      templateUrl: 'templates/loginModalTmpl.html',
-      targetEvent: event,
-    })
-  };
-
-  $scope.$watchCollection('UserService', function(){
-    $scope.currentUser = UserService.currentUser;
-    $scope.loadReceived();
-    $scope.loadMessages();
-  })
-
-  // $scope.$watchCollection()
-
-  $scope.logout = function(){
-    UserService.logout(function(err, data){
-      console.log('user logged out', err, data)
-    });
-  }
-
-  $scope.showSignup = function(event) {
-    $mdDialog.show({
-      controller: 'signupModalCtrl',
-      templateUrl: 'templates/signupModalTmpl.html',
-      targetEvent: event,
-    })
-  };
-
-  $scope.loadReceived = function(){
+  $rootScope.loadReceived = function(){
     if ($scope.currentUser){
       io.socket.get('/api/user/'+$scope.currentUser.id+'/received', function(data, jwRes){
         $scope.$evalAsync(function(){
           $rootScope.received = data
           console.log('received',$rootScope.received)
-          $rootScope.receivedCount = $rootScope.received.length
+          $rootScope.receivedCount = 0;
+          $rootScope.received.forEach(function(message){
+            console.log('count', $rootScope.receivedCount)
+            if (message.status == false){
+              $rootScope.receivedCount += 1
+            }else {
+              $rootScope.receivedCount -= 1
+            }
+          })
         })
       })
     }else{
@@ -101,14 +84,19 @@ HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'User
     }
   }
 
-  $scope.loadMessages = function(){
+  $rootScope.loadMessages = function(){
     if ($scope.currentUser){
       io.socket.get('/api/user/'+$scope.currentUser.id+'/messages', function(data, jwRes){
         console.log('message data', data)
         $scope.$evalAsync(function(){
           $rootScope.messages = data
           console.log('messages',$rootScope.messages)
-          $rootScope.messagesCount = $rootScope.messages.length
+          $rootScope.messagesCount = 0;
+          $rootScope.messages.forEach(function(message){
+            if (message.status == false){
+              $rootScope.messagesCount += 1
+            }
+          })
         })
       })
     }else{
@@ -175,10 +163,47 @@ HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'User
     console.log('accepted!!!!!',data)
   });
 
+  $rootScope.showLogin = function(event) {
+    $mdDialog.show({
+      controller: 'loginModalCtrl',
+      templateUrl: 'templates/loginModalTmpl.html',
+      targetEvent: event,
+    })
+  };
 
+  $scope.$watchCollection('UserService', function(){
+    $scope.currentUser = UserService.currentUser;
+    $rootScope.loadReceived();
+    $rootScope.loadMessages();
+  })
+
+  // $scope.$watchCollection()
+
+  $rootScope.logout = function(){
+    UserService.logout(function(err, data){
+      console.log('user logged out', err, data)
+    });
+  }
+
+  $rootScope.showSignup = function(event) {
+    $mdDialog.show({
+      controller: 'signupModalCtrl',
+      templateUrl: 'templates/signupModalTmpl.html',
+      targetEvent: event,
+    })
+  };
 }])
-  .controller('InboxNavCtrl',['$scope', '$rootScope', '$mdDialog', 'UserService', '$mdToast', '$animate','$mdSidenav','$mdUtil','$log', 'Messages', function($scope, $rootScope, $mdDialog,UserService, $mdToast, $animate, $mdSidenav, $mdUtil, $log, Messages){
+  .controller('InboxNavCtrl',['$scope', '$rootScope', '$mdDialog', 'UserService', '$mdToast', '$animate','$mdSidenav','$mdUtil','$log', 'Messages', '$routeParams', function($scope, $rootScope, $mdDialog,UserService, $mdToast, $animate, $mdSidenav, $mdUtil, $log, Messages, $routeParams){
     console.log('inbox nav ctrl loaded')
+
+    $scope.UserService = UserService;
+    $scope.$watchCollection('UserService', function(){
+      $scope.currentUser = UserService.currentUser;
+      $rootScope.loadReceived();
+      $rootScope.loadMessages();
+    })
+
+
     $rootScope.toggleMessage = buildToggler('nav-messages');
 
     // $scope.$on('$viewContentLoaded', function(){
@@ -198,11 +223,13 @@ HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'User
     }
 
     $scope.navMessage = function(messageId){
+      $routeParams = messageId,
       $scope.toggleMessage();
       console.log(messageId)
-      Messages.get({id: messageId}, function(data){
-        console.log(data)
-        $rootScope.msg = data
+      Messages.get({id: messageId}, function(message){
+        $rootScope.loadReceived();
+        $rootScope.msg = message
+        console.log(message)
       })
     }
   }])

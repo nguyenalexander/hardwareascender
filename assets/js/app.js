@@ -1,4 +1,4 @@
-var HardwareAscender = angular.module('HardwareAscender', ['ngRoute','ngResource', 'ngMaterial', 'ngMessages', 'ui.router']);
+var HardwareAscender = angular.module('HardwareAscender', ['ngRoute','ngResource', 'ngMaterial', 'ngMessages', 'ui.router', 'angular-cloudinary']);
 
 HardwareAscender.run(['$rootScope', 'UserService',function($rootScope, UserService) {
   console.log('hardware ascender is running')
@@ -18,12 +18,24 @@ HardwareAscender.run(['$rootScope', 'UserService',function($rootScope, UserServi
   });
 }])
 
-HardwareAscender.config(['$routeProvider', '$locationProvider', '$stateProvider', '$urlRouterProvider', function($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider){
+HardwareAscender.config(['$routeProvider', '$locationProvider', '$stateProvider', '$urlRouterProvider', 'cloudinaryProvider', function($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider, cloudinaryProvider){
+  // stripeProvider.setPublishableKey(process.env.STRIPE_KEY)
+//   $.cloudinary.config().cloud_name = process.env.CLOUDINARY_CLOUD;
+// $.cloudinary.config().upload_preset = process.env.CLOUDINARY_UNSIGNED_UPLOAD;
+  cloudinaryProvider.config({
+    upload_endpoint: 'https://api.cloudinary.com/v1_1/', // default
+    cloud_name: 'hxnshsiqt', // required
+    upload_preset: 'sb99x12r', // optional
+  });
   $locationProvider.html5Mode(true);
   $routeProvider
   .when('/', {
     templateUrl: '/views/home.html',
     controller: 'HomeCtrl'
+  })
+  .when('/message', {
+    templateUrl:'/views/home.html',
+    controller: 'InboxNavCtrl'
   })
   .when('/user/:id', {
     templateUrl: '/views/user/show.html',
@@ -35,54 +47,59 @@ HardwareAscender.config(['$routeProvider', '$locationProvider', '$stateProvider'
   })
   .when('/listing/:id', {
     templateUrl: '/views/listing/show.html',
-    controller: 'ListingCtrl'
+    controller: 'ListingShowCtrl'
   })
   .otherwise({
     templateUrl:'/views/404.html'
   });
   $stateProvider
+  .state('message', {
+    url: "/message",
+    templateUrl: "/views/home.html",
+    controller: 'InboxNavCtrl'
+  })
   .state('question', {
-    url: "",
+    url: "/message/:id",
     controller: 'replyCtrl',
     templateUrl: "/templates/message/questionShow.html"
   })
   .state('offer', {
-    url: "",
+    url: "/message/:id",
     controller: 'replyCtrl',
     templateUrl: "/templates/message/offerShow.html"
   })
   .state('buy', {
-    url: "",
+    url: "/message/:id",
     controller: 'replyCtrl',
     templateUrl: "/templates/message/buyShow.html"
   })
   .state('offer reply', {
-    url: "",
+    url: "/message/:id/",
     controller: 'replyCtrl',
     templateUrl: "/templates/message/offerReplyShow.html"
   })
   .state('offer decline', {
-    url: "",
+    url: "/message/:id/",
     controller: 'replyCtrl',
     templateUrl: "/templates/message/offerDecline.html"
   })
   .state('offer accept', {
-    url: "",
+    url: "/message/:id/",
     controller: 'replyCtrl',
     templateUrl: "/templates/message/offerAccept.html"
   })
   .state('replyQ', {
-    url: "",
+    url: "/message/:id/:replyId",
     controller: 'replyCtrl',
     templateUrl: "/templates/message/replyQ.html"
   })
   .state('replyO', {
-    url: "",
+    url: "/message/:id/:replyId",
     controller: 'replyCtrl',
     templateUrl: "/templates/message/replyO.html"
   })
   .state('replyB', {
-    url: "",
+    url: "/message/:id/:replyId",
     controller: 'replyCtrl',
     templateUrl: "/templates/message/replyB.html"
   })

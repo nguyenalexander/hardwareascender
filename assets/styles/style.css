@@ -13,6 +13,13 @@
   display: block;
 }
 
+.mobile-nav-btn {
+  height: inherit;
+  padding: 1em;
+  color: black;
+  display: block;
+}
+
 nav.brand-logo {
   padding-left: 2% !important;
   padding-right: 2% !important;

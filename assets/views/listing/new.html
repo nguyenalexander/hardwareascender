@@ -40,7 +40,7 @@
           <input ng-model="images" placeholder="or paste a URL here" id="images" type="text" class="file-path validate">
           <div class="waves-effect waves-light btn">
             <span><i class="mdi-file-file-upload"></i></span>
-            <input id="imageupload" type="file" \>
+            <input id="imageupload" type="file" ng-file-select ng-multiple="true" title="upload" resetOnClick="true" ng-model="images">
           </div>
           <label class="active" for="imageupload">upload image(s)</label>
         </div>

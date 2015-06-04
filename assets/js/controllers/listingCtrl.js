@@ -1,5 +1,6 @@
-HardwareAscender.controller('ListingCtrl', ['$scope', '$resource', 'Listings', 'UserService', '$location', '$routeParams', '$mdDialog', function($scope, $resource, Listings, UserService, $location, $routeParams, $mdDialog){
+HardwareAscender.controller('ListingCtrl', ['$scope', '$resource', 'Listings', 'UserService', '$location', '$routeParams', '$mdDialog', 'cloudinary', function($scope, $resource, Listings, UserService, $location, $routeParams, $mdDialog, cloudinary){
   console.log('listing controller loaded')
+  console.log('cloudinary',cloudinary)
   $scope.UserService = UserService;
 
   $scope.$watchCollection('UserService',function(){
@@ -11,6 +12,19 @@ HardwareAscender.controller('ListingCtrl', ['$scope', '$resource', 'Listings', '
   // Contacts.get({id: $routeParams.id}, function(data){
   //   $scope.contact = data;
   // })
+
+  $scope.$watch('images', function(images){
+    console.log(images)
+    if(!$scope.images) return;
+    $scope.images.forEach(function(image){
+      $scope.upload = cloudinary.upload({
+        url: "https://api.cloudinary.com/v1_1/" + $.cloudinary.config().cloud_name + "/upload",
+        data: {upload_preset: $.cloudinary.config().upload_preset, tags: 'myphotoalbum', context:'photo=' + $scope.title},
+        file: file
+      })
+    })
+  })
+
   $scope.createListing = function(){
     console.log('trying to create listing')
     var listing = new Listings();
@@ -36,7 +50,8 @@ HardwareAscender.controller('ListingCtrl', ['$scope', '$resource', 'Listings', '
       $location.path(path);
     };
   }
-
+}])
+  .controller('ListingShowCtrl', ['$scope', '$resource', 'Listings', 'UserService', '$location', '$routeParams', '$mdDialog', function($scope, $resource, Listings, UserService, $location, $routeParams, $mdDialog){
   Listings.get({id: $routeParams.id}, function(data){
     $scope.listing = data;
   })
@@ -67,6 +82,5 @@ HardwareAscender.controller('ListingCtrl', ['$scope', '$resource', 'Listings', '
         }
       })
     })
-  };
-
+  }
 }]);
