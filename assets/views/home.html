@@ -2,7 +2,7 @@
   <div class="col s3" ng-repeat="listing in listings">
     <div ng-if="listing.status == false" class="card grey lighten-5">
       <div class="card-image">
-        <a href="/listing/{{listing.id}}"><img src="https://placekitten.com/300/300?image=13"></a>
+        <a href="/listing/{{listing.id}}"><img ng-src="{{listing.images[0].url}}"></a>
         <span class="card-title flow-text">
           <h6>{{listing.brand}}</h6>
           <div class="divider"></div>

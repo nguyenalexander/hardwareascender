@@ -1,8 +1,8 @@
-HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'UserService', '$mdToast', '$animate','$mdSidenav','$mdUtil','$log', '$state', function($scope,$rootScope,$mdDialog,UserService, $mdToast, $animate, $mdSidenav, $mdUtil, $log, $state){
+HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'UserService', '$mdToast', '$animate','$mdSidenav','$mdUtil','$log', '$state', '$filter', function($scope,$rootScope,$mdDialog,UserService, $mdToast, $animate, $mdSidenav, $mdUtil, $log, $state, $filter){
   console.log('nav controller loaded.');
 
 
-    var buildToggler = function(navID, state) {
+    var buildToggler = function(navID) {
       // if (state){
       //   console.log('state changed to', state)
       //   $state.transitionTo(state)
@@ -17,7 +17,7 @@ HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'User
       return debounceFn;
     }
 
-    $scope.toggleInbox = buildToggler('nav-inbox', 'message');
+    $scope.toggleInbox = buildToggler('nav-inbox');
     $scope.toggleMobileNav = buildToggler('mobile-nav');
 
   $scope.UserService = UserService;
@@ -69,6 +69,9 @@ HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'User
           console.log('received',$rootScope.received)
           $rootScope.receivedCount = 0;
           $rootScope.received.forEach(function(message){
+            message.sentTime = new Date(message.createdAt);
+            var time = new Date();
+            message.timeStamp = (time - message.sentTime)/1000
             console.log('count', $rootScope.receivedCount)
             if (message.status == false){
               $rootScope.receivedCount += 1
@@ -93,6 +96,10 @@ HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'User
           console.log('messages',$rootScope.messages)
           $rootScope.messagesCount = 0;
           $rootScope.messages.forEach(function(message){
+            message.sentTime = new Date(message.createdAt);
+            var time = new Date();
+            message.timeStamp = (time - message.sentTime)/1000
+            console.log($filter('date')(message.createdAt,'short'), time)
             if (message.status == false){
               $rootScope.messagesCount += 1
             }

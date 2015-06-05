@@ -42,5 +42,5 @@ HardwareAscender.factory('UserService', ['$http', function($http){
   };
 }])
 .factory('Users', ['$resource', function($resource){
-  return $resource('/user/:id')
+  return $resource('/api/user/:id')
 }])

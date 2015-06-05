@@ -1,6 +1,21 @@
 <div class="row">
   <div class="col s5 text-center center-align">
-    <img src="https://placekitten.com/300/300?image=13">
+    <div class="listing-image">
+      <img ng-repeat="images in listing.images" class="slide image" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" ng-show="isActive($index)" ng-src="{{images.url}}" />
+
+      <!-- prev / next controls -->
+      <a><i class="mdi-navigation-chevron-right arrow right" href="#" ng-click="showPrev()"></i></a>
+      <a><i class="mdi-navigation-chevron-left arrow left" href="#" ng-click="showNext()"></i></a>
+
+      <!-- extra navigation controls -->
+      <ul class="nav">
+          <li ng-repeat="images in listing.images" ng-class="{'active':isActive($index)}">
+              <img class="image" ng-src="{{images.url}}" ng-click="showPhoto($index);" />
+          </li>
+      </ul>
+    </div>
+
+  <!-- <img ng-repeat="image in listing.images" ng-src="{{image.url}}" class="materialboxed"> -->
     <div class="divider"></div>
     <p class="text-flow"> <a href="/user/{{listing.user.id}}"> view other listings from {{listing.user.username}} </a> </p>
   </div>

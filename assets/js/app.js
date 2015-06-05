@@ -1,4 +1,4 @@
-var HardwareAscender = angular.module('HardwareAscender', ['ngRoute','ngResource', 'ngMaterial', 'ngMessages', 'ui.router', 'angular-cloudinary']);
+var HardwareAscender = angular.module('HardwareAscender', ['ngRoute','ngResource', 'ngMaterial', 'ngMessages', 'ui.router', 'angular-cloudinary', 'angularFileUpload']);
 
 HardwareAscender.run(['$rootScope', 'UserService',function($rootScope, UserService) {
   console.log('hardware ascender is running')
@@ -59,47 +59,47 @@ HardwareAscender.config(['$routeProvider', '$locationProvider', '$stateProvider'
   //   controller: 'InboxNavCtrl'
   // })
   .state('question', {
-    url: "/message/:id",
+    // url: "/message/:id",
     controller: 'replyCtrl',
     templateUrl: "/templates/message/questionShow.html"
   })
   .state('offer', {
-    url: "/message/:id",
+    // url: "/message/:id",
     controller: 'replyCtrl',
     templateUrl: "/templates/message/offerShow.html"
   })
   .state('buy', {
-    url: "/message/:id",
+    // url: "/message/:id",
     controller: 'replyCtrl',
     templateUrl: "/templates/message/buyShow.html"
   })
   .state('offer reply', {
-    url: "/message/:id/",
+    // url: "/message/:id/",
     controller: 'replyCtrl',
     templateUrl: "/templates/message/offerReplyShow.html"
   })
   .state('offer decline', {
-    url: "/message/:id/",
+    // url: "/message/:id/",
     controller: 'replyCtrl',
     templateUrl: "/templates/message/offerDecline.html"
   })
   .state('offer accept', {
-    url: "/message/:id/",
+    // url: "/message/:id/",
     controller: 'replyCtrl',
     templateUrl: "/templates/message/offerAccept.html"
   })
   .state('replyQ', {
-    url: "/message/:id/:replyId",
+    // url: "/message/:id/:replyId",
     controller: 'replyCtrl',
     templateUrl: "/templates/message/replyQ.html"
   })
   .state('replyO', {
-    url: "/message/:id/:replyId",
+    // url: "/message/:id/:replyId",
     controller: 'replyCtrl',
     templateUrl: "/templates/message/replyO.html"
   })
   .state('replyB', {
-    url: "/message/:id/:replyId",
+    // url: "/message/:id/:replyId",
     controller: 'replyCtrl',
     templateUrl: "/templates/message/replyB.html"
   })

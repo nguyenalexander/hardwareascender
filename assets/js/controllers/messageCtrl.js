@@ -4,11 +4,13 @@ HardwareAscender.controller('messageCtrl', ['$scope', '$mdDialog', '$routeParams
   Listings.get({id: $routeParams.id}, function(data){
     $scope.listing = data;
     $scope.listingUser = data.user;
+    console.log($scope.listing, $scope.listingUser)
   })
 
   $scope.sendQuestion = function(){
+    console.log($scope.messageBody)
     // var title = "Question on \'" + $scope.listing.title + '\'!';
-    io.socket.post('/api/user/'+$scope.listing.user.id+'/messages', {title:'New question on '+$scope.listing.title+'!', body:$scope.messageBody, type:'question', listing: $scope.listing.id}, function(data){
+    io.socket.post('/user/'+$scope.listing.user.id+'/messages', {title:'New question on '+$scope.listing.title+'!', body:$scope.messageBody, type:'question', listing: $scope.listing.id}, function(data){
       $scope.$evalAsync(function(){
       if (data){
           console.log('question sent',data)
@@ -24,7 +26,22 @@ HardwareAscender.controller('messageCtrl', ['$scope', '$mdDialog', '$routeParams
 
   $scope.sendOffer = function(){
     // var title = "Question on \'" + $scope.listing.title + '\'!';
-    io.socket.post('/api/user/'+$scope.listing.user.id+'/messages', {title:$scope.listing.title, body:$scope.messageBody, type:'buy', offer:$scope.offer, listing: $scope.listing.id}, function(data){
+    io.socket.post('/user/'+$scope.listing.user.id+'/messages', {title:$scope.listing.title, body:$scope.messageBody, type:'offer', offer:$scope.offer, listing: $scope.listing.id}, function(data){
+      $scope.$evalAsync(function(){
+      if (data){
+          console.log('offer sent',data)
+          $mdDialog.hide();
+        }else{
+          console.log('error!', data)
+          $mdDialog.hide();
+        }
+      })
+    })
+  };
+
+  $scope.sendBuy = function(price){
+    // var title = "Question on \'" + $scope.listing.title + '\'!';
+    io.socket.post('/user/'+$scope.listing.user.id+'/messages', {title:$scope.listing.title, body:$scope.messageBody, type:'buy', offer:$scope.offer, listing: $scope.listing.id}, function(data){
       $scope.$evalAsync(function(){
       if (data){
           console.log('offer sent',data)
@@ -45,7 +62,12 @@ HardwareAscender.controller('messageCtrl', ['$scope', '$mdDialog', '$routeParams
   $scope.sendReply = function(type, offer){
     offer = offer || 0;
     if (type == 'question'){
-    io.socket.post('/api/user/'+$rootScope.msg.sender.id+'/messages', {title:'re: ' + $rootScope.msg.messageTitle, body:$scope.messageBody, type:'question', listing: $rootScope.msg.listing.id}, function(data){
+    if ($rootScope.msg.messageTitle.indexOf('re:') == -1) {
+      var title = 're' + $rootScope.msg.messageTitle
+    }else{
+      var title = $rootScope.msg.messageTitle
+    }
+    io.socket.post('/user/'+$rootScope.msg.sender.id+'/messages', {title:title, body:$scope.messageBody, type:'question', listing: $rootScope.msg.listing.id}, function(data){
       $scope.$evalAsync(function(){
       if (data){
           console.log('reply sent',data)
@@ -57,7 +79,7 @@ HardwareAscender.controller('messageCtrl', ['$scope', '$mdDialog', '$routeParams
       })
     })
     }else if (type == 'offer reply'){
-    io.socket.post('/api/user/'+$rootScope.msg.sender.id+'/messages', {title:$rootScope.msg.messageTitle, body:$scope.messageBody, type:'offer reply', offer:offer, id:$rootScope.msg.id, listing: $rootScope.msg.listing.id}, function(data){
+    io.socket.post('/user/'+$rootScope.msg.sender.id+'/messages', {title:$rootScope.msg.messageTitle, body:$scope.messageBody, type:'offer reply', offer:offer, id:$rootScope.msg.id, listing: $rootScope.msg.listing.id}, function(data){
       $scope.$evalAsync(function(){
       if (data){
           console.log('offer sent',data)
@@ -69,7 +91,7 @@ HardwareAscender.controller('messageCtrl', ['$scope', '$mdDialog', '$routeParams
       })
     })
     }else if (type == 'offer decline'){
-    io.socket.post('/api/user/'+$rootScope.msg.sender.id+'/messages', {title:$rootScope.msg.messageTitle, body:$scope.messageBody, type:'offer decline', offer:offer, id:$rootScope.msg.id, listing: $rootScope.msg.listing.id}, function(data){
+    io.socket.post('/user/'+$rootScope.msg.sender.id+'/messages', {title:$rootScope.msg.messageTitle, body:$scope.messageBody, type:'offer decline', offer:offer, id:$rootScope.msg.id, listing: $rootScope.msg.listing.id}, function(data){
       $scope.$evalAsync(function(){
       if (data){
           console.log('offer decline sent',data)
@@ -81,7 +103,7 @@ HardwareAscender.controller('messageCtrl', ['$scope', '$mdDialog', '$routeParams
       })
     })
     }else if (type == 'offer accept'){
-    io.socket.post('/api/user/'+$rootScope.msg.sender.id+'/messages', {title:$rootScope.msg.messageTitle, body:$scope.messageBody, type:'offer accept', offer:offer, id:$rootScope.msg.id, listing: $rootScope.msg.listing.id}, function(data){
+    io.socket.post('/user/'+$rootScope.msg.sender.id+'/messages', {title:$rootScope.msg.messageTitle, body:$scope.messageBody, type:'offer accept', offer:offer, id:$rootScope.msg.id, listing: $rootScope.msg.listing.id}, function(data){
       $scope.$evalAsync(function(){
       if (data){
           console.log('offer accept sent',data)

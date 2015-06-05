@@ -39,7 +39,10 @@ module.exports.routes = {
   'get /auth': 'AuthController.check',
   'post /auth': 'AuthController.login',
   'delete /auth': 'AuthController.logout',
+  // 'get /user/:id': 'UserController.get',
   'post /user/:id/messages': 'MessageController.send',
+  'post /api/listing/': 'ListingController.create',
+  'post /api/listing/new/images': 'ListingController.upload',
   "get *": {
     controller:"ViewController",
     action:"index",

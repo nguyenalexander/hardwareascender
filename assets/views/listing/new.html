@@ -1,7 +1,7 @@
 <div class="row">
   <h2> new listing </h2>
   <div class="divider"></div>
-  <form>
+  <form enctype="multipart/form-data">
     <div class="listing-form col s12">
       <div class="row">
         <div class="input-field col s12">
@@ -37,13 +37,24 @@
       </div>
       <div class="row">
         <div class="file-field input-field">
-          <input ng-model="images" placeholder="or paste a URL here" id="images" type="text" class="file-path validate">
           <div class="waves-effect waves-light btn">
             <span><i class="mdi-file-file-upload"></i></span>
-            <input id="imageupload" type="file" ng-file-select ng-multiple="true" title="upload" resetOnClick="true" ng-model="images">
+            <input type="file" id="imageUpload" title="upload" nv-file-select="" uploader="uploader" multiple>
+            <!-- <input id="imageupload" type="file" title="upload" resetOnClick="true" ng-model="images">
+            {{images}} -->
           </div>
           <label class="active" for="imageupload">upload image(s)</label>
         </div>
+            <button class="btn waves-effect waves-light btn" type="submit" name="action" ng-click="doUpload()">upload</button>
+         <div class="col s-6 right">
+          <ul>
+            <li ng-repeat="image in uploader.queue">
+              <div ng-if="isImage(image._file)">
+              <div ng-thumb="{file: image._file, height: 100}"></div>
+              </div>
+            </li>
+          </ul>
+          </div>
       </div>
       <div class="row">
         <button class="btn waves-effect waves-light btn" type="submit" name="action" ng-click="createListing()">create</button>

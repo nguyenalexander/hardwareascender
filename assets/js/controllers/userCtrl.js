@@ -1,4 +1,4 @@
-HardwareAscender.controller('UserCtrl', ['$scope', '$resource', 'Users', 'UserService', '$location', '$routeParams', function($scope, $resource, Users, UserService, $location, $routeParams){
+HardwareAscender.controller('UserCtrl', ['$scope', '$resource', 'Users', 'UserService', '$location', '$routeParams', '$http', function($scope, $resource, Users, UserService, $location, $routeParams, $http){
   console.log('user controller loaded')
   // $scope.UserService = UserService;
 
@@ -7,8 +7,10 @@ HardwareAscender.controller('UserCtrl', ['$scope', '$resource', 'Users', 'UserSe
   // })
 
 
-  Users.get({id: $routeParams.id}, function(data){
+  $http.get('/api/user/'+$routeParams.id).success(function(data){
     $scope.user = data;
+    console.log('user',$scope.user)
     $scope.listings = $scope.user.listings
+    console.log($scope.listings)
   })
 }]);
