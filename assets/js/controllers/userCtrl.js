@@ -7,10 +7,8 @@ HardwareAscender.controller('UserCtrl', ['$scope', '$resource', 'Users', 'UserSe
   // })
 
 
-  $http.get('/api/user/'+$routeParams.id).success(function(data){
-    $scope.user = data;
-    console.log('user',$scope.user)
-    $scope.listings = $scope.user.listings
-    console.log($scope.listings)
+  $http.get('/user/'+$routeParams.id).success(function(data){
+    // $scope.user = data[0];
+    console.log('user',data)
   })
 }]);

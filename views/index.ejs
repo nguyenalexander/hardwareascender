@@ -6,7 +6,7 @@
     <ul ng-if="!$root.isMobile" id="nav" class="right hide-on-med-and-down">
       <li><a class="waves-effect waves-light btn-flat nav-btn" href="/#/listing/new" ng-if="currentUser">Sell</a></li>
       <li><a class="waves-effect waves-light btn-flat nav-btn" href="#" ng-click="$root.showLogin($event)" ng-if="!currentUser">Login</a></li>
-      <li><a class="waves-effect waves-light btn-flat nav-btn" href="#" ng-click="logout()" ng-if="$root.currentUser">Logout</a></li>
+      <li><a class="waves-effect waves-light btn-flat nav-btn" href="#" ng-click="logout()" ng-if="currentUser">Logout</a></li>
       <li><a class="waves-effect waves-light btn-flat nav-btn" href="/user/{{currentUser.id}}" ng-if="currentUser">Hello, {{currentUser.username}} </a></li>
       <li><a class="waves-effect waves-light btn-flat nav-btn" href="#" ng-click="$root.showSignup($event)" ng-if="!currentUser">Join</a></li>
     </ul>

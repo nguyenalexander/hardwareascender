@@ -20,7 +20,7 @@ module.exports = {
       switch(type){
         case 'question':
         var title = req.body.title;
-        Message.create({messageTitle: title, messageBody: body, sender: sender, recipient: recipient, type: type, status: false, listing: listing}).exec(function(err, data){
+        Message.create({messageTitle: title, messageBody: body, sender: sender, recipient: recipient, type: type, status: false, listing: listing}).populate('recipient').populate('sender').exec(function(err, data){
           if (err) {console.log(err)}
           user.received.push(data)
           User.findOne({id: data.sender}).then(function(sender){

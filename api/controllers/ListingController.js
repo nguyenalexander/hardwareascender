@@ -11,7 +11,7 @@ module.exports = {
 
   create: function(req, res){
     console.log(req.body)
-    Listing.create({title: req.body.title, brand: req.body.brand, desc: req.body.desc, category: req.body.category, price: req.body.price, status: req.body.status, user: req.body.user.id}).exec(function(err, listing){
+    Listing.create({title: req.body.title, brand: req.body.brand, desc: req.body.desc, category: req.body.category, price: req.body.price, status: req.body.status, user: req.body.user.id}).populate('user').exec(function(err, listing){
       res.send(listing)
     })
 

@@ -7,12 +7,12 @@
         <label for="messageBody">message</label>
       </div>
       <div class="input-field col s12">
-        <div class="price-addon">$</div><input ng-model="offer" id="offer" type="number" class="validate price-input"></input>
-        <label for="offer" class="price-input">price</label>
+        <div class="price-addon">$</div><input ng-model="$root.msg.offer" id="offer" type="number" class="validate price-input"></input>
+        <label for="offer" class="price-input active">price</label>
       </div>
     </div>
   </md-dialog-content>
   <div class="md-actions" layout="row">
-    <button class="btn waves-effect waves-light btn-flat login-form-submit" type="submit" name="action" ng-click="sendReply('offer reply')">send</button>
+    <button class="btn waves-effect waves-light btn-flat login-form-submit" type="submit" name="action" ng-click="sendReply('offer reply', $root.msg.offer)">send</button>
   </div>
   </form>

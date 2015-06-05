@@ -9,7 +9,7 @@
           <label class="active" for="brand">brand</label>
         </div>
         <div class="input-field col s12">
-          <input ng-model="desc" placeholder="e.g. This card runs HOT!" id="desc" type="text" class="validate">
+          <textarea ng-model="desc" placeholder="e.g. This card runs HOT!" id="desc" type="text" class="validate"></textarea>
           <label class="active" for="desc">description</label>
         </div>
       </div>
@@ -45,7 +45,6 @@
           </div>
           <label class="active" for="imageupload">upload image(s)</label>
         </div>
-            <button class="btn waves-effect waves-light btn" type="submit" name="action" ng-click="doUpload()">upload</button>
          <div class="col s-6 right">
           <ul>
             <li ng-repeat="image in uploader.queue">
@@ -55,6 +54,9 @@
             </li>
           </ul>
           </div>
+      </div>
+      <div ng-show="uploader.progress" layout="row" layout-sm="column" layout-align="space-around">
+        <md-progress-circular md-mode="determinate" value="{{uploader.progress}}"></md-progress-circular>
       </div>
       <div class="row">
         <button class="btn waves-effect waves-light btn" type="submit" name="action" ng-click="createListing()">create</button>

@@ -41,8 +41,11 @@ HardwareAscender.controller('ListingCtrl',
       // $scope.uploader.url = '/api/listing/'+id+'/images'
       console.log('after',$scope.uploader.url)
       // $scope.uploader.formData = id
-      $scope.uploader.uploadAll();
-      // $scope.goTo('/')
+      $scope.uploader.uploadAll()
+      $scope.uploader.onCompleteItem = function(fileItem, response, status, headers){
+        console.log('image upload completed', fileItem)
+        $scope.goTo('/')
+      }
     }
 
     // $scope.uploadAll = function(){
