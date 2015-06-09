@@ -13,7 +13,8 @@
   </div>
 </nav> -->
 <section layout="row" ng-controller="NavCtrl">
-  <h6 class="logo"><a href="/" class="waves-effect waves-light brand-logo"><h6 class="logo-left">HARDWARE</h6><h6 class="logo-right">ASCENDER</h6></a></h6>
+  <h6 class="logo" ng-if="!$root.isMobile"><a href="/" class="waves-effect waves-light brand-logo"><h6 class="logo-left">HARDWARE</h6><h6 class="logo-right">ASCENDER</h6></a></h6>
+  <h6 class="logo-mobile" ng-if="$root.isMobile"><a href="/" class="waves-effect waves-light brand-logo-mobile"><img src="/images/hardware-ascender-logo.png"></a></h6>
   <ul class="tabs nav-tabs" ng-class="{inactive: !currentUser}" ng-if="!$root.isMobile">
     <li ng-if="currentUser" class="tab col s2  teal-lighten-5"><a class="inbox-btn waves-effect waves-light" href="#" ng-click="toggleInbox()"><i class="mdi-communication-forum inbox"><span ng-class="{active: $root.receivedCount > 0, inactive: $root.receivedCount <= 0}" ng-show="$root.receivedCount > 0" class="badge notification-badge fx-bounce-normal fx-easing-sine fx-speed-600">{{$root.receivedCount}}</span></i></a></li>
     <li ng-if="currentUser" class="tab col s2"><a class="waves-effect waves-light" ui-sref="listing">Sell</a></li>

@@ -24,19 +24,18 @@
     <div><h4 class="text-flow"> {{listing.title}} <em class="title-price">(${{listing.price}})</em></h4></div>
     <div class="divider"></div>
     <p> {{listing.desc}} </p>
-    <a ng-click="sendOffer(listing.price)" class="waves-effect waves-teal btn-flat">buy</a>
-    <a ng-click="showOffer()" class="waves-effect waves-teal btn-flat">make an offer</a>
-    <a ng-click="showQuestion()" class="waves-effect waves-teal btn-flat">ask a question</a>
+    <div class="actions">
+      <p ng-if="!currentUser"> <em> Please sign in to ask a question or make an offer! </em> </p>
+      <a ng-click="!currentUser || sendOffer(listing.price)" ng-disabled="!currentUser" ng-class="{disabled: !currentUser}" class="waves-effect waves-teal btn-flat">buy</a>
+      <a ng-click="!currentUser || showOffer()" ng-disabled="!currentUser" ng-class="{disabled: !currentUser}" class="waves-effect waves-teal btn-flat">make an offer</a>
+      <a ng-click="!currentUser || showQuestion()" ng-disabled="!currentUser" ng-class="{disabled: !currentUser}" class="waves-effect waves-teal btn-flat">ask a question</a>
+    </div>
   </div>
 </div>
 <div class="row" ng-if="listing.user.id == currentUser.id">
   <div class="col s5 text-center center-align">
     <div class="listing-image">
       <img ng-repeat="images in listing.images" class="slide image" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" ng-show="isActive($index)" ng-src="{{images.url}}" />
-
-      <!-- prev / next controls -->
-      <a><i class="mdi-navigation-chevron-right arrow right" href="#" ng-click="showPrev()"></i></a>
-      <a><i class="mdi-navigation-chevron-left arrow left" href="#" ng-click="showNext()"></i></a>
 
       <!-- extra navigation controls -->
       <ul class="nav">
@@ -46,7 +45,6 @@
       </ul>
     </div>
 
-  <!-- <img ng-repeat="image in listing.images" ng-src="{{image.url}}" class="materialboxed"> -->
     <div class="divider"></div>
     <p class="text-flow"> <a href="/user/{{listing.user.id}}"> view other listings from {{listing.user.username}} </a> </p>
   </div>

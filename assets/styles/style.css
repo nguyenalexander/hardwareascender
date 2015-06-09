@@ -125,6 +125,16 @@ nav.brand-logo {
   background-color: #263238;
 }
 
+.brand-logo {
+  font-family: 'Fjalla One', sans-serif;
+  color: black;
+  height: 128px;
+  padding-top: 3%;
+  width: 100%;
+  z-index: 1;
+  background-color: #263238;
+}
+
 .logo-divider {
   height: 1px;
   width: 70%;
@@ -142,6 +152,15 @@ h6.logo {
   font-size: 2em;
   width: 100%;
   height: 100%;
+  text-align: center;
+  margin-top: 0;
+}
+
+h6.logo-mobile {
+  position: absolute;
+  font-size: 2em;
+  width: 50%%;
+  height: 50%;
   text-align: center;
   margin-top: 0;
 }
