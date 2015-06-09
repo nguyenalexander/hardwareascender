@@ -7,6 +7,7 @@
 
 module.exports = {
 	retrieve: function(req, res){
+    console.log(req.params)
     async.auto({
       user: function(callback){
         User.find({id: req.params.id}).populate('listings').populate('watchList').exec(function(err, user){
