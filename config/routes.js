@@ -41,6 +41,7 @@ module.exports.routes = {
   'delete /auth': 'AuthController.logout',
   // 'post /api/user': 'UserController.create',
   'get /api/user/:id': 'UserController.retrieve',
+  'put /api/user/:id': 'UserController.update',
   'get /api/user/:id/messages': 'MessageController.retrieve',
   'post /user/:id/messages': 'MessageController.send',
   'post /api/listing/': 'ListingController.create',

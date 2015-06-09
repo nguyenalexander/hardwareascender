@@ -1,4 +1,4 @@
-HardwareAscender.controller('HomeCtrl', ['$scope', '$resource', 'UserService', function($scope, $resource, UserService){
+HardwareAscender.controller('HomeCtrl', ['$scope', '$rootScope', '$resource', 'UserService', 'Users', '$http', function($scope, $rootScope, $resource, UserService, Users, $http){
 
   $scope.userService = UserService;
 
@@ -29,6 +29,22 @@ HardwareAscender.controller('HomeCtrl', ['$scope', '$resource', 'UserService', f
     })
   }
   $scope.loadListings();
+
+  $scope.addToWatch = function(listing){
+    $http.get('/api/user/'+$scope.currentUser.id).success(function(user){
+      console.log(user)
+      if (user.user.watchList){
+        user.user.watchList.push(listing.id)
+        $http.put('/api/user/'+$scope.currentUser.id, {watchList: user.user.watchList}).success(function(updated){
+          console.log(updated)
+        })
+      }else {
+        user.user.watchList = [];
+        user.user.watchList.push(listing.id)
+      }
+
+    })
+  }
 
   io.socket.on('listing', function(msg){
     console.log('Message:',msg);
@@ -63,48 +79,4 @@ HardwareAscender.controller('HomeCtrl', ['$scope', '$resource', 'UserService', f
       }
     }
   })
-
-  // $scope.deleteContact = function(contactId){
-  //   Listing.delete({id:contactId}, function(data){
-  //     AlertService.add('danger', 'Contact Deleted!')
-  //   });
-  // };
-
-  // $scope.showContact = function(contactId){
-  //   Listing.get({id:contactId}, function(data){
-  //     console.log(data)
-  //   });
-  // };
-
-  // $scope.createContact = function(){
-  //   var contact = new Listing();
-  //   contact.firstName = "Test"
-  //   contact.lastName = "Test"
-  //   contact.email = "Test"
-  //   contact.address ="Test"
-  //   contact.city ="Test"
-  //   contact.state ="Test"
-  //   contact.zip ="12321"
-  //   contact.phone ="Test"
-  //   contact.notes ="Test"
-  //   contact.$save(function(data){
-  //     console.log(data);
-  //     $scope.loadListing();
-  //   });
-  // };
-
-  // $scope.openEditModal = function(contactId){
-  //   $scope.contactId = contactId
-  //   $modal.open({
-  //     templateUrl: '/views/editContactModal.html',
-  //     controller: 'EditContactModal',
-  //     resolve: {
-  //       contact: function(){
-  //         return $scope.contactId
-  //       }
-  //     }
-  //   })
-  // }
-
-
 }]);

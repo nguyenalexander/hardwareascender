@@ -9,7 +9,7 @@ module.exports = {
 	retrieve: function(req, res){
     async.auto({
       user: function(callback){
-        User.find({id: req.params.id}).populate('listings').exec(function(err, user){
+        User.find({id: req.params.id}).populate('listings').populate('watchList').exec(function(err, user){
           callback(null, user[0])
         });
       },
@@ -27,6 +27,13 @@ module.exports = {
       console.log('results:',result)
       res.send(result)
     })
+  },
+  update: function(req, res){
+    console.log(req.body)
+    User.update({id: req.params.id}, {watchList: req.body.watchList}).exec(function(err, user){
+      console.log('user watchlist updated', user)
+      res.send(user)
+    });
   }
 };
 
