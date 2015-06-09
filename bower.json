@@ -1,0 +1,13 @@
+{
+  "name": "hardwareascender",
+  "version": "0.0.0",
+  "homepage": "https://github.com/nguyenalexander/hardwareascender",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

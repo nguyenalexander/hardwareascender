@@ -1,4 +1,4 @@
-HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'UserService', '$mdToast', '$animate','$mdSidenav','$mdUtil','$log', '$state', '$filter', function($scope,$rootScope,$mdDialog,UserService, $mdToast, $animate, $mdSidenav, $mdUtil, $log, $state, $filter){
+HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'UserService', '$mdToast', '$animate','$mdSidenav','$mdUtil','$log', '$state', '$filter', '$timeout', function($scope,$rootScope,$mdDialog,UserService, $mdToast, $animate, $mdSidenav, $mdUtil, $log, $state, $filter, $timeout){
   console.log('nav controller loaded.');
 
 
@@ -61,56 +61,86 @@ HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'User
     );
   };
 
-  $rootScope.loadReceived = function(){
+  $rootScope.loadMessages = function(){
     if ($scope.currentUser){
-      io.socket.get('/api/user/'+$scope.currentUser.id+'/received', function(data, jwRes){
+      io.socket.get('/api/user/'+$scope.currentUser.id+'/messages', function(data, jwRes){
+        console.log("user's messages:", data)
         $scope.$evalAsync(function(){
-          $rootScope.received = data
+          $rootScope.received = data.received
           console.log('received',$rootScope.received)
           $rootScope.receivedCount = 0;
           $rootScope.received.forEach(function(message){
             message.sentTime = new Date(message.createdAt);
             var time = new Date();
-            message.timeStamp = (time - message.sentTime)/1000
+            message.time = (time - message.sentTime)/1000
+            if (message.time > 3600 * 24){
+              message.timestamp = Math.floor(((message.time/60)/60)/24) + " days ago."
+            }else if (message.time > 3600){
+              message.timestamp = Math.floor((message.time/60)/60) + " hours ago."
+            }else if (message.time > 60){
+              message.timestamp = Math.floor(message.time/60) + " minutes ago."
+            }else{
+              message.timestamp = "less than a minute ago."
+            }
+            //***************************************
             console.log('count', $rootScope.receivedCount)
+            $timeout(function(){
             if (message.status == false){
               $rootScope.receivedCount += 1
-            }else {
-              $rootScope.receivedCount -= 1
+            }
+            },30);
+          })
+          $rootScope.messages = data.messages
+          console.log('messages',$rootScope.messages)
+          $rootScope.messagesCount = 0;
+          $rootScope.messages.forEach(function(message){
+            message.sentTime = new Date(message.createdAt);
+            var time = new Date();
+            message.time = (time - message.sentTime)/1000
+            if (message.time > 3600 * 24){
+              message.timestamp = Math.floor(((message.time/60)/60)/24) + " days ago."
+            }else if (message.time > 3600){
+              message.timestamp = Math.floor((message.time/60)/60) + " hours ago."
+            }else if (message.time > 60){
+              message.timestamp = Math.floor(message.time/60) + " minutes ago."
+            }else{
+              message.timestamp = "less than a minute ago."
             }
           })
         })
       })
     }else{
       $rootScope.received = [];
-      $rootScope.receivedCount = false;
+      $rootScope.receivedCount = 0;
+      $rootScope.messages = [];
+      $rootScope.messagesCount = 0;
     }
   }
 
-  $rootScope.loadMessages = function(){
-    if ($scope.currentUser){
-      io.socket.get('/api/user/'+$scope.currentUser.id+'/messages', function(data, jwRes){
-        console.log('message data', data)
-        $scope.$evalAsync(function(){
-          $rootScope.messages = data
-          console.log('messages',$rootScope.messages)
-          $rootScope.messagesCount = 0;
-          $rootScope.messages.forEach(function(message){
-            message.sentTime = new Date(message.createdAt);
-            var time = new Date();
-            message.timeStamp = (time - message.sentTime)/1000
-            console.log($filter('date')(message.createdAt,'short'), time)
-            if (message.status == false){
-              $rootScope.messagesCount += 1
-            }
-          })
-        })
-      })
-    }else{
-      $rootScope.messages = [];
-      $rootScope.messagesCount = false;
-    }
-  }
+  // $rootScope.loadMessages = function(){
+  //   if ($scope.currentUser){
+  //     io.socket.get('/user/'+$scope.currentUser.id+'/messages', function(data, jwRes){
+  //       console.log('message data', data)
+  //       $scope.$evalAsync(function(){
+  //         $rootScope.messages = data
+  //         console.log('messages',$rootScope.messages)
+  //         $rootScope.messagesCount = 0;
+  //         $rootScope.messages.forEach(function(message){
+  //           message.sentTime = new Date(message.createdAt);
+  //           var time = new Date();
+  //           message.timeStamp = (time - message.sentTime)/1000
+  //           console.log($filter('date')(message.createdAt,'short'), time)
+  //           if (message.status == false){
+  //             $rootScope.messagesCount += 1
+  //           }
+  //         })
+  //       })
+  //     })
+  //   }else{
+  //     $rootScope.messages = [];
+  //     $rootScope.messagesCount = false;
+  //   }
+  // }
 
 
   io.socket.on('message', function(data){
@@ -180,8 +210,8 @@ HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'User
 
   $scope.$watchCollection('UserService', function(){
     $scope.currentUser = UserService.currentUser;
-    $rootScope.loadReceived();
-    $rootScope.loadMessages();
+    // $rootScope.loadReceived();
+    // $rootScope.loadMessages();
   })
 
   // $scope.$watchCollection()
@@ -200,13 +230,13 @@ HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'User
     })
   };
 }])
-  .controller('InboxNavCtrl',['$scope', '$rootScope', '$mdDialog', 'UserService', '$mdToast', '$animate','$mdSidenav','$mdUtil','$log', 'Messages', '$routeParams', function($scope, $rootScope, $mdDialog,UserService, $mdToast, $animate, $mdSidenav, $mdUtil, $log, Messages, $routeParams){
+  .controller('InboxNavCtrl',['$scope', '$rootScope', '$mdDialog', 'UserService', '$mdToast', '$animate','$mdSidenav','$mdUtil','$log', 'Messages', '$routeParams', 'Message', '$timeout', function($scope, $rootScope, $mdDialog,UserService, $mdToast, $animate, $mdSidenav, $mdUtil, $log, Messages, $routeParams, Message, $timeout){
     console.log('inbox nav ctrl loaded')
 
     $scope.UserService = UserService;
     $scope.$watchCollection('UserService', function(){
       $scope.currentUser = UserService.currentUser;
-      $rootScope.loadReceived();
+      // $rootScope.loadReceived();
       $rootScope.loadMessages();
     })
 
@@ -229,14 +259,23 @@ HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'User
       return debounceFn;
     }
 
-    $scope.navMessage = function(messageId){
-      $routeParams = messageId,
+    $scope.navMessage = function(message){
+      console.log('nav message ran with', message)
       $scope.toggleMessage();
-      console.log(messageId)
-      Messages.get({id: messageId}, function(message){
-        $rootScope.loadReceived();
-        $rootScope.msg = message
-        console.log(message)
-      })
+      if (message.status == false) {
+        Message.update({id: message.id}, {status: true}, function(message){
+          $rootScope.loadMessages();
+          $rootScope.msg = message
+          $timeout(function(){
+            $rootScope.receivedCount -= 1
+          },15);
+        })
+      }else if (message.status == true) {
+        Message.get({id: message.id}, function(message){
+          console.log(message)
+          $rootScope.loadMessages();
+          $rootScope.msg = message
+        })
+      }
     }
   }])

@@ -14,6 +14,31 @@
 
 module.exports = function(grunt) {
 
+	grunt.loadNpmTasks('grunt-wiredep');
+
+	grunt.initConfig({
+		wiredep: {
+
+		  task: {
+
+		    // Point to the files that should be updated when
+		    // you run `grunt wiredep`
+		    src: [
+		      'assets/views/**/*.html',   // .html support...
+		      'assets/views/*.html',   // .html support...
+		      'templates/*.html',
+		      'templates/message/*.html'
+		    ],
+
+		    options: {
+		      // See wiredep's configuration documentation for the options
+		      // you may pass:
+
+		      // https://github.com/taptapship/wiredep#configuration
+		    }
+		  }
+		}
+	});
 
 	// Load the include-all library in order to require all of our grunt
 	// configurations and task registrations dynamically.
@@ -71,7 +96,7 @@ module.exports = function(grunt) {
 
 	// (ensure that a default task exists)
 	if (!registerDefinitions.default) {
-		registerDefinitions.default = function (grunt) { grunt.registerTask('default', []); };
+		registerDefinitions.default = function (grunt) { grunt.registerTask('default', ['wiredep']); };
 	}
 
 	// Run task functions to configure Grunt.

@@ -63,7 +63,7 @@ HardwareAscender.controller('messageCtrl', ['$scope', '$mdDialog', '$routeParams
     offer = offer || 0;
     if (type == 'question'){
     if ($rootScope.msg.messageTitle.indexOf('re:') == -1) {
-      var title = 're' + $rootScope.msg.messageTitle
+      var title = 're: ' + $rootScope.msg.messageTitle
     }else{
       var title = $rootScope.msg.messageTitle
     }
@@ -79,6 +79,7 @@ HardwareAscender.controller('messageCtrl', ['$scope', '$mdDialog', '$routeParams
       })
     })
     }else if (type == 'offer reply'){
+    console.log($rootScope.msg)
     io.socket.post('/user/'+$rootScope.msg.sender.id+'/messages', {title:$rootScope.msg.messageTitle, body:$scope.messageBody, type:'offer reply', offer:offer, id:$rootScope.msg.id, listing: $rootScope.msg.listing.id}, function(data){
       $scope.$evalAsync(function(){
       if (data){

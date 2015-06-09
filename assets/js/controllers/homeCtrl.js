@@ -9,6 +9,21 @@ HardwareAscender.controller('HomeCtrl', ['$scope', '$resource', 'UserService', f
     io.socket.get('/api/listing/', function(data, jwRes){
       $scope.$evalAsync(function(){
         $scope.listings = data
+        $scope.listings.forEach(function(listing){
+          listing.updatedAt = new Date(listing.updatedAt)
+          var time = new Date();
+          listing.time = ((time - listing.updatedAt)/1000)
+          console.log('listing time:',listing.time)
+          if (listing.time > 3600 * 24){
+            listing.timestamp = Math.floor(((listing.time/60)/60)/24) + " days ago"
+          }else if (listing.time > 3600){
+            listing.timestamp = Math.floor((listing.time/60)/60) + " hours ago"
+          }else if (listing.time > 60){
+            listing.timestamp = Math.floor(listing.time/60) + " minutes ago"
+          }else{
+            listing.timestamp = "less than a minute ago"
+          }
+        })
       })
       console.log('data', data)
     })

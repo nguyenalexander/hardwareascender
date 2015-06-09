@@ -1,5 +1,33 @@
+body {
+  font-family: 'Cantarell', sans-serif;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus,
+a:focus {
+  outline: none;
+}
+
 .container {
   width: 85%;
+}
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+
+md-progress-circular {
+  width: 50px;
+  height: 50px;
+  display: block;
+  position: absolute;
+  padding-top: 0!important;
+  margin-bottom: 0!important;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
 }
 
 .toolbar {
@@ -19,16 +47,39 @@ img.logo {
   display: block;
 }
 
+.nav-tabs {
+  position: relative;
+  height: 48px;
+  background-color: #fff;
+  width: 100%;
+  white-space: nowrap;
+  left: 12%;
+  margin-top: 6%;
+}
+
+.nav-tabs.inactive {
+  position: relative;
+  height: 48px;
+  background-color: #fff;
+  width: 100%;
+  white-space: nowrap;
+  left: 0;
+  margin-top: 6%;
+}
+
+.read {
+  font-weight: normal;
+}
+
+.unread {
+  font-weight: bold;
+}
+
 .mobile-nav-btn {
   height: inherit;
   padding: 1em;
   color: black;
   display: block;
-}
-
-nav.brand-logo {
-  padding-left: 2% !important;
-  padding-right: 2% !important;
 }
 
 md-dialog {
@@ -59,8 +110,135 @@ nav .brand-logo {
   line-height: inherit;
 }
 
+nav.brand-logo {
+  padding-left: 2% !important;
+  padding-right: 2% !important;
+}
+
+.brand-logo {
+  font-family: 'Fjalla One', sans-serif;
+  color: black;
+  height: 128px;
+  padding-top: 3%;
+  width: 100%;
+  z-index: 1;
+  background-color: #263238;
+}
+
+.logo-divider {
+  height: 1px;
+  width: 70%;
+  left: 15%;
+  overflow: hidden;
+  position: absolute;
+  background-color: #e1e1e1;
+  color: #e0e0e0;
+  top: 80px;
+  z-index: 4;
+}
+
+h6.logo {
+  position: absolute;
+  font-size: 2em;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  margin-top: 0;
+}
+
+h6.logo-right {
+  position: absolute;
+  font-size: 2em;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  margin-top: 0;
+  left: 10%;
+  color: #c1c1c1;
+}
+
+h6.logo-left {
+  position: absolute;
+  font-size: 2em;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  margin-top: 0;
+  right: 10%;
+  color: #e1e1e1;
+}
+
 .notification {
   color: red;
+}
+
+.timestamp {
+  font-size: 10px;
+}
+
+ng-view {
+  position: absolute;
+  top: 12.5%;
+  left: 5%;
+  margin-left: 1%;
+  margin-right: 5%;
+  width: 88%;
+}
+
+ng-view.ng-enter {
+  -webkit-animation-name: slideInRight;
+  animation-name: slideInRight;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+}
+
+ng-view.ng-leave {
+  -webkit-animation-name: slideOutLeft;
+  animation-name: slideOutLeft;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+}
+
+.card-parent.ng-enter {
+  -webkit-animation-name: slideInRight;
+  animation-name: slideInRight;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+}
+
+.card-parent.ng-hide {
+  -webkit-animation-name: slideOutLeft;
+  animation-name: slideOutLeft;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+}
+
+.card-parent.ng-enter-stagger,
+.card-parent.ng-hide-stagger {
+  transition-delay:0.2s;
+  -webkit-transition-delay:0.2s;
+  -webkit-transition-duration:0;
+  transition-duration:0;
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  margin: 0.5rem 0 1rem 0;
+  background-color: #fff;
+  border-radius: 2px;
+  height: 300px;
+}
+
+.card .card-content {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  min-width: 100%;
+}
+
+.card-image {
+  height: 60%;
 }
 
 .card .card-image .card-title {
@@ -73,6 +251,22 @@ nav .brand-logo {
   background: -o-linear-gradient(bottom, rgba(0,0,0,.25) , rgba(0,0,0,0));
   background: -moz-linear-gradient(bottom, rgba(0,0,0,.25) , rgba(0,0,0,0));
   background: linear-gradient(bottom, rgba(0,0,0,.25) , rgba(0,0,0,0));
+}
+
+img.responsive-img {
+  max-height: 100% !important;
+}
+
+.divider.timestamp-divider {
+  position: relative;
+  float: right;
+  width: 70%;
+  top: 0.77em;
+}
+
+.listing-timestamp {
+  font-size: 10px;
+  margin-left: 3%;
 }
 
 .container .row {
@@ -91,12 +285,28 @@ em.title-price.ng-binding {
 }
 
 .badge.notification-badge {
-  right: 10px;
+  right: 7px;
   color: #fff;
   background-color: #26a69a;
-  border-radius: 2px;
-  margin-left: 20%;
+  border-radius: 0.25em;
+  margin-left: 0%;
   position: relative;
+  top: -23px;
+}
+
+i.mdi-communication-forum.inbox {
+  font-size: 30px;
+}
+
+.badge.notification-badge.inactive {
+  visibility: hidden;
+  right: 7px;
+  color: #fff;
+  background-color: #26a69a;
+  border-radius: .25em;
+  margin-left: 0%;
+  position: relative;
+  top: -24px;
 }
 
 .badge.sidenav-badge {
@@ -113,10 +323,22 @@ em.title-price.ng-binding {
 }
 
 #nav-inbox {
-  width: 35% !important;
-  max-width: 35% !important;
-  min-width: 35% !important;
+  width: 45% !important;
+  max-width: 45% !important;
+  min-width: 45% !important;
   position: fixed;
+}
+
+.inbox {
+  display: inline;
+}
+
+td.received-message {
+  cursor: pointer;
+}
+
+md-select.category-select {
+  width: 100%;
 }
 
 #nav-messages {
@@ -141,15 +363,14 @@ em.title-price.ng-binding {
 /**********************/
 
 .listing-image {
-  height:500px;
-  width:500px;
+  max-width: 100%;
   overflow:hidden;
 }
 
 .image {
-  max-height: 400px;
-  max-width: 400px;
+  max-width: 100%;
 }
+
 .arrow {
     cursor: pointer;
     display: block;
@@ -181,7 +402,7 @@ em.title-price.ng-binding {
 .nav {
     bottom: -4px;
     display: block;
-    height: 48px;
+    height: 100%;
     left: 0;
     margin: 0 auto;
     padding: 1em 0 0.8em;
@@ -191,7 +412,7 @@ em.title-price.ng-binding {
     z-index: 5;
 }
 .nav li {
-    border: 5px solid #AAAAAA;
+    border: .5px solid #AAAAAA;
     border-radius: 5px;
     cursor: pointer;
     display: inline-block;
@@ -230,6 +451,10 @@ em.title-price.ng-binding {
 }
 .slide, .slide.ng-hide-remove.ng-hide-remove-active {
     opacity:1;
+}
+
+.listing-images {
+  max-height: 100px;
 }
 /*
 nav a {

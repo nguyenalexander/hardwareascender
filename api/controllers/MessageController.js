@@ -20,7 +20,7 @@ module.exports = {
       switch(type){
         case 'question':
         var title = req.body.title;
-        Message.create({messageTitle: title, messageBody: body, sender: sender, recipient: recipient, type: type, status: false, listing: listing}).populate('recipient').populate('sender').exec(function(err, data){
+        Message.create({messageTitle: title, messageBody: body, sender: sender, recipient: recipient, type: type, status: false, listing: listing}).populate('recipient').populate('sender').populate('listing').exec(function(err, data){
           if (err) {console.log(err)}
           user.received.push(data)
           User.findOne({id: data.sender}).then(function(sender){
@@ -80,7 +80,7 @@ module.exports = {
         })
       break;
         case 'offer decline':
-        var title = 'Your offer on "'+req.body.title+'" has been declined.';
+        var title = req.body.title+' has been declined.';
         Message.update({id:req.body.id}, {messageTitle: title, messageBody: 'Your offer of '+offer+' has been declined', sender: sender, recipient: recipient, type: type, offer: offer, status: false}).exec(function afterwards(err,updated){
           if (err) {
             console.log(err);
@@ -107,7 +107,7 @@ module.exports = {
         })
       break;
         case 'offer accept':
-        var title = 'Your offer on "'+req.body.title+'" has been accepted!';
+        var title = req.body.title+' has been accepted!';
         Message.update({id:req.body.id}, {messageTitle: title, messageBody: 'Your offer of '+offer+' has been accepted!', sender: sender, recipient: recipient, type: type, offer: offer, status: false}).exec(function afterwards(err,updated){
           if (err) {
             console.log(err);
@@ -136,7 +136,7 @@ module.exports = {
         })
       break;
         case 'buy':
-        console.log(req.body)
+        console.log('buy initiated', req.body)
         var title = req.body.title;
         Message.create({messageTitle: title, messageBody: body, sender: sender, recipient: recipient, type: type, offer: offer, status: false, listing: listing}).exec(function(err, data){
           if (err) {console.log(err)}
@@ -155,6 +155,37 @@ module.exports = {
         })
       break;
       }
+    })
+  },
+  retrieve: function(req, res){
+    async.auto({
+      user: function(callback){
+        User.find({id: req.params.id}).populate('messages').populate('received').exec(function(err, user){
+          callback(null, user[0])
+        });
+      },
+      messages: ['user', function(callback, user){
+        async.map(user.user.messages, function(message, innercb){
+          Message.find({id:message.id}).populate('sender').populate('recipient').populate('listing').exec(function(err, data){
+            innercb(null, data[0]);
+          });
+        }, function(err, results){
+          callback(null, results)
+        })
+      }],
+      received: ['user', function(callback, user){
+        async.map(user.user.received, function(received, innercb){
+          Message.find({id:received.id}).populate('sender').populate('recipient').populate('listing').exec(function(err, data){
+            innercb(null, data[0]);
+          });
+        }, function(err, results){
+          callback(null, results)
+        })
+      }],
+    }, function(err, result){
+      console.log('err = ', err)
+      console.log('results:',result)
+      res.send(result)
     })
   }
 };

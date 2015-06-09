@@ -1,21 +1,21 @@
-<div class="row">
-  <h2> new listing </h2>
-  <div class="divider"></div>
-  <form enctype="multipart/form-data">
+<form enctype="multipart/form-data">
+  <div class="row">
+    <h2> edit {{listing.title}}</h2>
+    <div class="divider"></div>
     <div class="listing-form col s12">
       <div class="row">
         <div class="input-field col s12">
-          <input ng-model="brand" placeholder="e.g. Nvidia" id="brand" type="text" class="validate">
+          <input ng-model="listing.brand" placeholder="e.g. Nvidia" id="brand" type="text" class="validate">
           <label class="active" for="brand">brand</label>
         </div>
         <div class="input-field col s12">
-          <textarea ng-model="desc" placeholder="e.g. This card runs HOT!" id="desc" type="text" class="validate materialize-textarea"></textarea>
+          <textarea ng-model="listing.desc" placeholder="e.g. This card runs HOT!" id="desc" type="text" class="validate materialize-textarea"></textarea>
           <label class="active" for="desc">description</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <input ng-model="title" placeholder="e.g. geforce gtx titan x" id="title" type="text" class="validate">
+          <input ng-model="listing.title" placeholder="e.g. geforce gtx titan x" id="title" type="text" class="validate">
           <label class="active" for="title">title</label>
         </div>
       </div>
@@ -23,14 +23,14 @@
         <div class="input-field col s12">
           <label class="active">Category</label>
           <br\>
-          <md-select ng-model="category" class="category-select" placeholder="choose one">
+          <md-select ng-model="listing.category" class="category-select" placeholder="choose one">
             <md-option ng-repeat="category in categories" value="{{category}}">{{category}}</md-option>
           </md-select>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <input ng-model="price" placeholder="e.g. 499 Martian Credits" id="price" type="text" class="validate">
+          <input ng-model="listing.price" placeholder="e.g. 499 Martian Credits" id="price" type="text" class="validate">
           <label class="active" for="price">price <em>(all prices are in usd)</em></label>
         </div>
       </div>
@@ -60,6 +60,5 @@
         <button ng-click="(title || desc || price || images) ? openModal() : goTo('/')" class="btn waves-effect waves-light btn">cancel</button>
       </div>
     </div>
-  </form>
-</div>
-
+  </div>
+</form>

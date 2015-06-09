@@ -11,5 +11,5 @@ angular.element(document).ready(function(){
   //   menuWidth: inboxWidth,
   //   edge: 'left'
   // });
-  angular.element('ul.tabs').tabs();
+  angular.element('.tabs').tabs();
 })
