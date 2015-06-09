@@ -19,7 +19,7 @@
           <h6>{{listing.title}}</h6>
         </a>
         <p>${{listing.price}} | <em><a href="/user/{{listing.user.id}}">{{listing.user.username}}</a></em></p>
-        <a ng-show="$root.currentUser" class="waves-effect waves-light" ng-click="addToWatch(listing)"><p>add to your watch list</p></a>
+        <a class="waves-effect waves-light" ng-click="addToWatch(listing)"><p>add to your watch list</p></a>
       </div>
     </div>
   </div>
