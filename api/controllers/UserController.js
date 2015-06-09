@@ -23,6 +23,15 @@ module.exports = {
           callback(null, results)
         })
       }],
+      watchList: ['user', function(callback, user){
+        async.map(user.user.watchList, function(listing, innercb){
+          Listing.find({id:listing.id}).populate('images').exec(function(err, data){
+            innercb(null, data[0]);
+          });
+        }, function(err, results){
+          callback(null, results)
+        })
+      }],
     }, function(err, result){
       console.log('err = ', err)
       console.log('results:',result)

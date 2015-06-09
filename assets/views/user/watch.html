@@ -2,7 +2,7 @@
   <h2> {{user.username}}'s watch list </h2>
   <div class="divider"></div>
   <div class="active listings">
-    <div class="col s12 l4 card-parent" ng-repeat="listing in (listings | filter:query | orderBy:'updatedAt':true)">
+    <div class="col s12 l4 card-parent" ng-repeat="listing in (watchList | filter:query | orderBy:'updatedAt':true)">
       <div ng-if="listing.status == false" class="card grey lighten-5">
         <div class="card-image">
           <a href="/listing/{{listing.id}}">
