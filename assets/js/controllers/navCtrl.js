@@ -1,4 +1,4 @@
-HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'UserService', '$mdToast', '$animate','$mdSidenav','$mdUtil','$log', '$state', '$filter', '$timeout', function($scope,$rootScope,$mdDialog,UserService, $mdToast, $animate, $mdSidenav, $mdUtil, $log, $state, $filter, $timeout){
+HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'UserService', '$mdToast', '$animate','$mdSidenav','$mdUtil','$log', '$state', '$filter', '$timeout', '$location', function($scope,$rootScope,$mdDialog,UserService, $mdToast, $animate, $mdSidenav, $mdUtil, $log, $state, $filter, $timeout, $location){
   console.log('nav controller loaded.');
 
 
@@ -28,6 +28,12 @@ HardwareAscender.controller('NavCtrl',['$scope','$rootScope', '$mdDialog', 'User
     left: false,
     right: true
   };
+
+
+  $scope.goToWatch = function(path){
+    $location.path('/user/'+$scope.UserService.currentUser.id+'/watch-list');
+  };
+
   $scope.getToastPosition = function() {
     return Object.keys($scope.toastPosition)
       .filter(function(pos) { return $scope.toastPosition[pos]; })

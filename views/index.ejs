@@ -19,7 +19,7 @@
     <li ng-if="currentUser" class="tab col s2  teal-lighten-5"><a class="inbox-btn waves-effect waves-light" href="#" ng-click="toggleInbox()"><i class="mdi-communication-forum inbox"><span ng-class="{active: $root.receivedCount > 0, inactive: $root.receivedCount <= 0}" ng-show="$root.receivedCount > 0" class="badge notification-badge fx-bounce-normal fx-easing-sine fx-speed-600">{{$root.receivedCount}}</span></i></a></li>
     <li ng-if="currentUser" class="tab col s2"><a class="waves-effect waves-light" ui-sref="listing">Sell</a></li>
     <li ng-if="currentUser" class="tab col s2"><a class="waves-effect waves-light" ui-sref="home-nav">Home</a></li>
-    <li ng-if="currentUser" class="tab col s2"><a class="waves-effect waves-light" ui-sref="user-watch({userId: currentUser.id})">Watch List</a></li>
+    <li ng-if="currentUser" class="tab col s2"><a class="waves-effect waves-light" ng-click="goToWatch()">Watch List</a></li>
     <li ng-if="currentUser" class="tab col s2"><a class="waves-effect waves-light" ui-sref="user({id: currentUser.id})">Hello, {{currentUser.username}} </a></li>
     <li ng-if="currentUser" class="tab col s2"><a class="waves-effect waves-light" ng-click="logout()">Logout</a></li>
     <li ng-hide="currentUser" ng-cloak class="tab col s2"><a class="waves-effect waves-light" ng-click="$root.showSignup($event)">Join</a></li>
