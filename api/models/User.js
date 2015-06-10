@@ -26,8 +26,7 @@ module.exports = {
       via: 'user'
     },
     watchList : {
-      collection: 'Listing',
-      via: 'user'
+      collection: 'Listing'
     },
     messages: {
       collection: 'Message',
