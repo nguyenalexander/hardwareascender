@@ -24,6 +24,10 @@ HardwareAscender.config(['$routeProvider', '$locationProvider', '$stateProvider'
     templateUrl: '/views/user/show.html',
     controller: 'UserCtrl'
   })
+  .when('/user/:id/watch-list', {
+    templateUrl: '/views/user/watch.html',
+    controller: 'UserCtrl'
+  })
   .when('/listing/new', {
     templateUrl: '/views/listing/new.html',
     controller: 'ListingCtrl'
@@ -40,7 +44,7 @@ HardwareAscender.config(['$routeProvider', '$locationProvider', '$stateProvider'
     templateUrl:'/views/404.html'
   });
   $stateProvider
-  .state('home', {
+  .state('home-nav', {
     url: '/',
     templateurl: '/views/home.html',
     controller: 'HomeCtrl'
@@ -117,6 +121,7 @@ HardwareAscender.run(['$rootScope', 'UserService', '$timeout', 'cfpLoadingBar', 
   UserService.check(function(err, data){
   console.log(err, data);
   console.log('Current User',UserService.currentUser)
+  $rootScope.currentUser = UserService.currentUser;
   });
 
   $rootScope.start = function() {
