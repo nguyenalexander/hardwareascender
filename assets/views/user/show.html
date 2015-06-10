@@ -4,7 +4,7 @@
   <div class="active listings">
     <div class="col s12 l4 card-parent" ng-repeat="listing in (listings | filter:query | orderBy:'updatedAt':true)">
       <div ng-if="listing.status == false" class="card grey lighten-5">
-        <div class="card-image">
+        <div class="card-image center">
           <a href="/listing/{{listing.id}}">
             <img class="responsive-img" ng-src="{{listing.images[0].url}}">
           </a>

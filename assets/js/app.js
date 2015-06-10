@@ -121,7 +121,9 @@ HardwareAscender.run(['$rootScope', 'UserService', '$timeout', 'cfpLoadingBar', 
   UserService.check(function(err, data){
   console.log(err, data);
   console.log('Current User',UserService.currentUser)
-  $rootScope.currentUser = UserService.currentUser;
+  $scope.$watchCollection('UserService',function(){
+    $rootScope.currentUser = UserService.currentUser;
+  })
   });
 
   $rootScope.start = function() {

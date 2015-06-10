@@ -266,6 +266,9 @@ ng-view.ng-leave {
   height: 60%;
 }
 
+.card .card-image img {
+  width: inherit;
+}
 .card .card-image .card-title {
   position: absolute;
   bottom: 2%;

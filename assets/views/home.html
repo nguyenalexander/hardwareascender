@@ -7,7 +7,7 @@
   </div>
   <div class="col s12 l4 card-parent" ng-if="listings.length != 0" ng-repeat="listing in (listings | filter:query | orderBy:'updatedAt':true)">
     <div ng-if="listing.status == false" class="card grey lighten-5">
-      <div class="card-image">
+      <div class="card-image center">
         <a href="/listing/{{listing.id}}">
           <img class="responsive-img" ng-src="{{listing.images[0].url}}">
         </a>
@@ -19,7 +19,7 @@
           <h6>{{listing.title}}</h6>
         </a>
         <p>${{listing.price}} | <em><a href="/user/{{listing.user.id}}">{{listing.user.username}}</a></em></p>
-        <a ng-class="{disabled: !currentUser}" class="waves-effect btn-flat listing-add" ng-click="!currentUser || addToWatch(listing)">+</a>
+        <a ng-class="{disabled: !$root.currentUser}" class="waves-effect btn-flat listing-add" ng-click="!$root.currentUser || addToWatch(listing)">+</a>
       </div>
     </div>
   </div>
