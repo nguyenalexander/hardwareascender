@@ -18,6 +18,12 @@ a:focus {
   display: none !important;
 }
 
+a.waves-effect.btn-flat.listing-add {
+  position: absolute !important;
+  right: 0;
+  bottom: 0;
+}
+
 md-progress-circular {
   width: 50px;
   height: 50px;
@@ -53,7 +59,7 @@ img.logo {
   background-color: #fff;
   width: 100%;
   white-space: nowrap;
-  left: 12%;
+  left: 6%;
   margin-top: 6%;
 }
 
@@ -205,15 +211,15 @@ ng-view {
 }
 
 ng-view.ng-enter {
-  -webkit-animation-name: slideInRight;
-  animation-name: slideInRight;
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
 }
 
 ng-view.ng-leave {
-  -webkit-animation-name: slideOutLeft;
-  animation-name: slideOutLeft;
+  -webkit-animation-name: fadeOut;
+  animation-name: fadeOut;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
 }
