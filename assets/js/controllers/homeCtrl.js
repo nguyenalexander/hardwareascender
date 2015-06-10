@@ -1,9 +1,31 @@
-HardwareAscender.controller('HomeCtrl', ['$scope', '$rootScope', '$resource', 'UserService', 'Users', '$http', function($scope, $rootScope, $resource, UserService, Users, $http){
+HardwareAscender.controller('HomeCtrl', ['$scope', '$rootScope', '$resource', 'UserService', 'Users', '$http', '$mdToast', function($scope, $rootScope, $resource, UserService, Users, $http, $mdToast){
 
   $scope.userService = UserService;
 
   console.log("home controller loaded")
   $scope.listings = [];
+
+  $scope.toastPosition = {
+    bottom: true,
+    top: false,
+    left: false,
+    right: true
+  };
+
+ $scope.getToastPosition = function() {
+    return Object.keys($scope.toastPosition)
+      .filter(function(pos) { return $scope.toastPosition[pos]; })
+      .join(' ');
+  };
+
+  $scope.showAddedToast = function(listing) {
+    $mdToast.show(
+      $mdToast.simple()
+        .content(listing.title + ' has been added to your watch list!')
+        .position($scope.getToastPosition())
+        .hideDelay(3000)
+    );
+  };
 
   $scope.loadListings = function(){
     io.socket.get('/api/listing/', function(data, jwRes){
@@ -36,7 +58,7 @@ HardwareAscender.controller('HomeCtrl', ['$scope', '$rootScope', '$resource', 'U
       if (user.user.watchList){
         user.user.watchList.push(listing.id)
         $http.put('/api/user/'+$scope.currentUser.id, {watchList: user.user.watchList}).success(function(updated){
-          console.log(updated)
+          $scope.showAddedToast(listing)
         })
       }else {
         user.user.watchList = [];
